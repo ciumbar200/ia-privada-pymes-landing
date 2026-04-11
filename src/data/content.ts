@@ -192,37 +192,37 @@ export const metrics = [
   },
 ]
 
-export const testimonials = [
+export const trustPillars = [
   {
-    quote:
-      'Pasamos de apagar fuegos todo el día a tener un proceso claro. Lo notamos en semanas, no en meses.',
-    name: '[Nombre Apellido]',
-    role: '[Director/a de Operaciones]',
-    company: '[Empresa logística PYME]',
+    title: 'Metodología clara y repetible',
+    description:
+      'Cada implantación sigue un proceso definido: diagnóstico, priorización, piloto y escalado con entregables concretos.',
   },
   {
-    quote:
-      'Nos daba miedo la privacidad. Ahora sabemos qué se queda en casa y qué sale fuera, con reglas claras.',
-    name: '[Nombre Apellido]',
-    role: '[Gerencia General]',
-    company: '[Asesoría empresarial]',
+    title: 'Gobernanza y control de datos',
+    description:
+      'Definimos permisos, trazabilidad y límites de uso desde el inicio para reducir riesgos operativos y de privacidad.',
   },
   {
-    quote:
-      'No necesitábamos más herramientas, necesitábamos quitar trabajo manual. El equipo lo adoptó rápido.',
-    name: '[Nombre Apellido]',
-    role: '[Responsable de Administración]',
-    company: '[Industria ligera]',
+    title: 'Acompañamiento real del equipo',
+    description:
+      'No dejamos solo al cliente: formamos a las personas clave y damos soporte para asegurar adopción y continuidad.',
   },
 ]
 
-export const sectorPlaceholders = [
-  'Despacho',
+export const sectors = [
+  'Despachos y asesorías',
   'Inmobiliaria',
-  'Clínica',
-  'E-commerce',
-  'Asesoría',
+  'Clínicas y centros de salud',
+  'E-commerce y retail',
+  'Servicios profesionales',
   'Industria ligera',
+]
+
+export const confidenceNotes = [
+  'Trabajamos con acuerdos de confidencialidad cuando el proyecto lo requiere.',
+  'Cada fase se documenta para que la dirección tenga visibilidad y control.',
+  'Si quieres referencias de tu sector, las compartimos en el diagnóstico inicial bajo contexto y confidencialidad.',
 ]
 
 export const faqs = [

@@ -9,12 +9,12 @@ import { Reveal } from './components/Reveal'
 import { SeoStructuredData } from './components/SeoStructuredData'
 import { Section } from './components/Section'
 import { StickyNav } from './components/StickyNav'
-import { TestimonialCard } from './components/TestimonialCard'
 import { UseCaseCard } from './components/UseCaseCard'
 import { MobileStickyCta } from './components/MobileStickyCta'
 import { WhatsAppQuickContact } from './components/WhatsAppQuickContact'
 import {
   brandName,
+  confidenceNotes,
   deploymentOptions,
   differentiators,
   faqs,
@@ -23,9 +23,9 @@ import {
   navItems,
   problemPoints,
   processSteps,
-  sectorPlaceholders,
+  sectors,
   services,
-  testimonials,
+  trustPillars,
   useCases,
   whatsappShortMessage,
 } from './data/content'
@@ -269,28 +269,36 @@ function App() {
 
         <Section
           id="prueba-social"
-          eyebrow="Prueba social"
-          title="Historias y sectores donde este enfoque ya está dando resultados"
-          description="Estructura preparada para que puedas añadir testimonios y logos reales fácilmente."
+          eyebrow="Confianza operativa"
+          title="Cómo trabajamos para que tengas seguridad y control desde el primer día"
+          description="Sin testimonios inventados: aquí tienes nuestras prácticas y los sectores donde más implementamos."
         >
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {testimonials.map((testimonial, index) => (
-              <Reveal key={testimonial.company} delay={index * 80}>
-                <TestimonialCard
-                  quote={testimonial.quote}
-                  name={testimonial.name}
-                  role={testimonial.role}
-                  company={testimonial.company}
-                />
+            {trustPillars.map((pillar, index) => (
+              <Reveal key={pillar.title} delay={index * 80}>
+                <article className="surface-card h-full p-6">
+                  <h3 className="text-xl font-semibold text-brand-950">{pillar.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-graphite-700">{pillar.description}</p>
+                </article>
               </Reveal>
             ))}
           </div>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {sectorPlaceholders.map((sector, index) => (
+            {sectors.map((sector, index) => (
               <Reveal key={sector} delay={index * 60}>
-                <div className="rounded-xl border border-dashed border-brand-300 bg-brand-100/40 px-4 py-3 text-center text-sm font-semibold text-brand-800">
+                <div className="rounded-xl border border-brand-200 bg-white px-4 py-3 text-center text-sm font-semibold text-brand-800 shadow-soft">
                   {sector}
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-8 grid gap-3">
+            {confidenceNotes.map((note, index) => (
+              <Reveal key={note} delay={index * 70}>
+                <div className="rounded-xl border border-brand-200 bg-brand-50 px-4 py-3 text-sm text-graphite-700">
+                  {note}
                 </div>
               </Reveal>
             ))}
