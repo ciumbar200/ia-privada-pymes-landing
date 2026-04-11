@@ -1,0 +1,17 @@
+# Nexo IA Empresas
+
+> Automatización de procesos para micropymes y pymes con enfoque en privacidad, control de datos y resultados medibles.
+
+## Servicios principales
+- Diagnóstico inicial de automatización.
+- Implantación de agentes de IA en local, híbrido o con APIs externas.
+- Formación al equipo y mantenimiento continuo.
+
+## Mensaje clave
+- Menos tareas manuales.
+- Más tiempo para negocio.
+- Privacidad y seguridad desde el diseño.
+
+## Contacto
+- Landing principal: https://nexoiaempresas.com/
+- CTA principal: Solicitar diagnóstico.
