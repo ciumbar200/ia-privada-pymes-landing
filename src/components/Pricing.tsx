@@ -6,12 +6,14 @@ export function Pricing() {
       name: 'Starter',
       price: '299',
       period: '/mes',
+      implementationTime: '2-3 semanas',
       features: [
         '1 servicio de automatización',
         'Chatbot básico 24/7',
         'Configuración inicial',
         'Soporte por email',
-        'Dashboard básico'
+        'Dashboard básico',
+        '<strong>📅 Implementación: 2-3 semanas</strong>'
       ],
       cta: 'Empezar Ahora',
       featured: false
@@ -20,13 +22,15 @@ export function Pricing() {
       name: 'Growth',
       price: '599',
       period: '/mes',
+      implementationTime: '3-4 semanas',
       features: [
         '3 servicios de automatización',
         'Chatbot avanzado 24/7',
         'Leads cualificados automáticos',
         'Integración CRM incluida',
         'Soporte prioritario 24/7',
-        'Dashboard avanzado + analytics'
+        'Dashboard avanzado + analytics',
+        '<strong>📅 Implementación: 3-4 semanas</strong>'
       ],
       cta: 'Empezar Ahora',
       featured: true
@@ -35,13 +39,15 @@ export function Pricing() {
       name: 'Enterprise',
       price: '999+',
       period: '/mes',
+      implementationTime: '4-6 semanas',
       features: [
         'Servicios ilimitados',
         'Chatbot personalizado 24/7',
         'Integraciones custom',
         'Account manager dedicado',
         'SLA garantizado 99.9%',
-        'Soporte 24/7 multicanal'
+        'Soporte 24/7 multicanal',
+        '<strong>📅 Implementación: 4-6 semanas</strong>'
       ],
       cta: 'Contactar Ventas',
       featured: false
@@ -57,7 +63,7 @@ export function Pricing() {
             Elige el plan que mejor se adapte a tu negocio
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-graphite-700">
-            Sin contratos a largo plazo. Cancela cuando quieras.
+            Tiempos de implementación claros. Sin contratos a largo plazo. Cancela cuando quieras.
           </p>
         </div>
 
@@ -77,11 +83,13 @@ export function Pricing() {
                   <span className="text-4xl font-bold">{plan.price}€</span>
                   <span className="text-sm font-medium">{plan.period}</span>
                 </div>
+                <div className={`mt-3 rounded-xl bg-brand-50 px-3 py-2 text-xs font-semibold ${plan.featured ? 'bg-brand-700 text-brand-100' : 'text-brand-700'}`}>
+                  📅 Implementación: {plan.implementationTime}
+                </div>
                 <ul className="mt-6 space-y-3">
                   {plan.features.map((feature, idx) => (
-                    <li key={idx} className={`flex items-start gap-2 text-sm ${plan.featured ? 'text-brand-100' : 'text-graphite-700'}`}>
+                    <li key={idx} className={`flex items-start gap-2 text-sm ${plan.featured ? 'text-brand-100' : 'text-graphite-700'}`} dangerouslySetInnerHTML={{ __html: feature }}>
                       <span className="mt-0.5 flex-shrink-0 text-brand-500">✓</span>
-                      {feature}
                     </li>
                   ))}
                 </ul>
