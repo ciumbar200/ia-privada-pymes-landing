@@ -12,7 +12,25 @@ export const navItems = [
 export const heroMicroBenefits = [
   'Recupera horas cada semana',
   'Equipo digital de apoyo',
-  'Tus datos bajo control',
+  'Empieza con inversión controlada',
+]
+
+export const affordabilityPoints = [
+  {
+    title: 'Empieza por un solo proceso crítico',
+    description:
+      'No necesitas automatizar todo de golpe. Arrancamos por donde más retorno tienes en menos tiempo.',
+  },
+  {
+    title: 'Implantación gradual y asumible',
+    description:
+      'Diseñamos una hoja de ruta por fases para que la inversión acompañe al crecimiento del resultado.',
+  },
+  {
+    title: 'Tu equipo humano gana protagonismo',
+    description:
+      'Las tareas repetitivas pasan al equipo digital y tus personas se enfocan en atención, ventas y mejora.',
+  },
 ]
 
 export const problemPoints = [

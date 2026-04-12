@@ -65,10 +65,20 @@ export default {
           '0%, 100%': { opacity: '0.35' },
           '50%': { opacity: '0.55' },
         },
+        'float-gentle': {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+        'drift-side': {
+          '0%, 100%': { transform: 'translateX(0px)' },
+          '50%': { transform: 'translateX(6px)' },
+        },
       },
       animation: {
         'fade-up': 'fade-up 600ms ease-out both',
         'pulse-slow': 'pulse-slow 8s ease-in-out infinite',
+        'float-gentle': 'float-gentle 4.8s ease-in-out infinite',
+        'drift-side': 'drift-side 5.5s ease-in-out infinite',
       },
     },
   },

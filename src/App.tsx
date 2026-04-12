@@ -13,6 +13,7 @@ import { UseCaseCard } from './components/UseCaseCard'
 import { MobileStickyCta } from './components/MobileStickyCta'
 import { WhatsAppQuickContact } from './components/WhatsAppQuickContact'
 import {
+  affordabilityPoints,
   brandName,
   confidenceNotes,
   deploymentOptions,
@@ -128,6 +129,69 @@ function App() {
       </header>
 
       <main>
+        <section id="asequible" className="py-16 lg:py-20">
+          <div className="section-shell grid items-center gap-8 lg:grid-cols-[1fr_1fr]">
+            <Reveal>
+              <div className="relative">
+                <div className="surface-card overflow-hidden rounded-3xl">
+                  <img
+                    src="/images/owner-meeting.jpg"
+                    alt="Equipo de pyme revisando procesos en una reunión de trabajo"
+                    className="h-[360px] w-full object-cover transition duration-700 hover:scale-[1.02] lg:h-[430px]"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div className="absolute -left-3 top-5 animate-float-gentle rounded-xl border border-action-200 bg-white px-3 py-2 text-xs font-semibold text-action-700 shadow-soft">
+                  Piloto inicial con inversión controlada
+                </div>
+                <div className="absolute -bottom-4 left-6 animate-drift-side rounded-xl border border-growth-200 bg-white px-3 py-2 text-xs font-semibold text-growth-700 shadow-soft">
+                  Impacto visible en semanas
+                </div>
+
+                <div className="surface-card absolute -bottom-10 right-4 hidden w-52 overflow-hidden rounded-2xl border border-white/80 sm:block">
+                  <img
+                    src="/images/team-work.jpg"
+                    alt="Equipo trabajando con apoyo digital en tareas operativas"
+                    className="h-32 w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={120}>
+              <span className="section-kicker">Sí es para pymes</span>
+              <h2 className="text-3xl leading-tight md:text-4xl">
+                Imagen profesional, enfoque práctico y presupuesto realista
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-graphite-700 md:text-lg">
+                Puedes tener una implantación seria sin gastar como una gran corporación. Empezamos
+                pequeño, medimos resultados y escalamos solo cuando compensa.
+              </p>
+
+              <div className="mt-6 space-y-4">
+                {affordabilityPoints.map((point, index) => (
+                  <Reveal key={point.title} delay={index * 80}>
+                    <article className="surface-card p-5">
+                      <h3 className="text-lg font-semibold text-brand-950">{point.title}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-graphite-700">{point.description}</p>
+                    </article>
+                  </Reveal>
+                ))}
+              </div>
+
+              <a
+                href="#diagnostico"
+                className="btn-primary mt-7"
+                onClick={() => trackEvent('cta_click', { location: 'asequible_section', type: 'primary' })}
+              >
+                Solicitar diagnóstico ahora
+              </a>
+            </Reveal>
+          </div>
+        </section>
+
         <Section
           id="problema"
           eyebrow="El problema"
