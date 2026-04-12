@@ -225,6 +225,7 @@ function App() {
               </Reveal>
             ))}
           </div>
+        </Section>
 
         <Pricing />
 
@@ -267,6 +268,7 @@ function App() {
               </Reveal>
             ))}
           </div>
+        </Section>
 
         <Testimonials />
 
