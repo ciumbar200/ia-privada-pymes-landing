@@ -12,6 +12,8 @@ import { StickyNav } from './components/StickyNav'
 import { UseCaseCard } from './components/UseCaseCard'
 import { MobileStickyCta } from './components/MobileStickyCta'
 import { WhatsAppQuickContact } from './components/WhatsAppQuickContact'
+import { Pricing } from './components/Pricing'
+import { Testimonials } from './components/Testimonials'
 import {
   affordabilityPoints,
   brandName,
@@ -223,7 +225,8 @@ function App() {
               </Reveal>
             ))}
           </div>
-        </Section>
+
+        <Pricing />
 
         <Section
           id="casos"
@@ -264,7 +267,8 @@ function App() {
               </Reveal>
             ))}
           </div>
-        </Section>
+
+        <Testimonials />
 
         <Section
           id="diferenciales"
