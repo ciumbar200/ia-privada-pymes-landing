@@ -4,8 +4,8 @@ interface WhatsAppQuickContactProps {
   shortMessage: string
 }
 
-function normalizePhone(value: string): string {
-  return value.replace(/[^\d]/g, '')
+function normalizePhone(values: string): string {
+  return values.replace(/[^\d]/g, '')
 }
 
 export function WhatsAppQuickContact({ shortMessage }: WhatsAppQuickContactProps) {
@@ -32,10 +32,8 @@ export function WhatsAppQuickContact({ shortMessage }: WhatsAppQuickContactProps
         className="btn-secondary mt-5 w-full"
         onClick={() => trackEvent('cta_click', { location: 'whatsapp_card', type: 'secondary' })}
       >
-        Contacto rápido por WhatsApp
+        💬 Contactar por WhatsApp
       </a>
-
-      <p className="mt-3 text-xs text-graphite-600">Número editable vía VITE_WHATSAPP_NUMBER.</p>
     </aside>
   )
 }
