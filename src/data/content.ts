@@ -7,6 +7,7 @@ export const navItems = [
   { href: '#arquitectura', label: 'Local / Híbrido / API' },
   { href: '#resultados', label: 'Resultados' },
   { href: '#faq', label: 'FAQ' },
+  { href: '/equipos', label: 'Equipos' },
 ]
 
 export const heroMicroBenefits = [
