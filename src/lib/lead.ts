@@ -5,13 +5,9 @@ export type SubmitLeadResult =
   | { status: 'not_configured' }
   | { status: 'error'; message: string }
 
-const leadEndpoint = import.meta.env.VITE_LEAD_ENDPOINT_URL?.trim()
+const leadEndpoint = import.meta.env.VITE_LEAD_ENDPOINT_URL?.trim() || '/api/submit'
 
 export async function submitLead(data: LeadFormData): Promise<SubmitLeadResult> {
-  if (!leadEndpoint) {
-    return { status: 'not_configured' }
-  }
-
   try {
     const response = await fetch(leadEndpoint, {
       method: 'POST',
@@ -19,9 +15,11 @@ export async function submitLead(data: LeadFormData): Promise<SubmitLeadResult> 
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        ...data,
-        source: 'landing_nexo_ia_empresas',
-        submittedAt: new Date().toISOString(),
+        nombre: data.name,
+        email: data.email,
+        empresa: data.company,
+        telefono: data.phone,
+        sector: data.sector,
       }),
     })
 

@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/api/submit",
+      "destination": "http://89.117.18.118:8080/submit"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
