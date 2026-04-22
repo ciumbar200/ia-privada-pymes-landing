@@ -5,7 +5,7 @@ const allowedHosts = new Set(['noxoiaempresas.com', 'www.noxoiaempresas.com'])
 
 export function ApolloInboundLoader() {
   useEffect(() => {
-    const appId = import.meta.env.VITE_APOLLO_APP_ID?.trim() || '69e9495c725c9d00217650cc'
+    const appId = import.meta.env.VITE_APOLLO_APP_ID?.trim() || '69e9495c725c9d00217650cd'
     const host = window.location.hostname
 
     if (!appId || !allowedHosts.has(host)) {
