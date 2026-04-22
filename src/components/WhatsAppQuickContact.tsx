@@ -32,7 +32,7 @@ export function WhatsAppQuickContact({ shortMessage }: WhatsAppQuickContactProps
         className="btn-secondary mt-5 w-full"
         onClick={() => trackEvent('cta_click', { location: 'whatsapp_card', type: 'secondary' })}
       >
-        💬 Contactar por WhatsApp
+        Contactar por WhatsApp
       </a>
     </aside>
   )

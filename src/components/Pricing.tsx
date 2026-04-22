@@ -1,112 +1,98 @@
-import { Reveal } from './Reveal'
+import type { PricingPlan } from '../data/content'
 
-export function Pricing() {
-  const plans = [
-    {
-      name: 'Starter',
-      price: '299',
-      period: '/mes',
-      implementationTime: '2-3 semanas',
-      features: [
-        '1 servicio de automatización',
-        'Chatbot básico 24/7',
-        'Configuración inicial',
-        'Soporte por email',
-        'Dashboard básico',
-        '<strong>📅 Implementación: 2-3 semanas</strong>'
-      ],
-      cta: 'Empezar Ahora',
-      featured: false
-    },
-    {
-      name: 'Growth',
-      price: '599',
-      period: '/mes',
-      implementationTime: '3-4 semanas',
-      features: [
-        '3 servicios de automatización',
-        'Chatbot avanzado 24/7',
-        'Leads cualificados automáticos',
-        'Integración CRM incluida',
-        'Soporte prioritario 24/7',
-        'Dashboard avanzado + analytics',
-        '<strong>📅 Implementación: 3-4 semanas</strong>'
-      ],
-      cta: 'Empezar Ahora',
-      featured: true
-    },
-    {
-      name: 'Enterprise',
-      price: '999+',
-      period: '/mes',
-      implementationTime: '4-6 semanas',
-      features: [
-        'Servicios ilimitados',
-        'Chatbot personalizado 24/7',
-        'Integraciones custom',
-        'Account manager dedicado',
-        'SLA garantizado 99.9%',
-        'Soporte 24/7 multicanal',
-        '<strong>📅 Implementación: 4-6 semanas</strong>'
-      ],
-      cta: 'Contactar Ventas',
-      featured: false
-    }
-  ]
+interface PricingProps {
+  plans: PricingPlan[]
+  compact?: boolean
+}
 
+export function Pricing({ plans, compact = false }: PricingProps) {
   return (
-    <section id="precios" className="py-16 lg:py-20 bg-white">
-      <div className="section-shell">
-        <div className="mb-12 text-center">
-          <span className="section-kicker">Planes transparentes</span>
-          <h2 className="mt-2 text-3xl leading-tight md:text-4xl">
-            Elige el plan que mejor se adapte a tu negocio
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-graphite-700">
-            Tiempos de implementación claros. Sin contratos a largo plazo. Cancela cuando quieras.
+    <div className={`grid gap-6 ${compact ? 'xl:grid-cols-3' : 'lg:grid-cols-3'}`}>
+      {plans.map((plan) => (
+        <article
+          key={plan.name}
+          className={`rounded-[2rem] border p-7 shadow-soft ${
+            plan.featured
+              ? 'border-brand-300 bg-brand-950 text-white shadow-elevated'
+              : 'border-white/80 bg-white/92'
+          }`}
+        >
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p
+                className={`text-xs font-semibold uppercase tracking-[0.14em] ${
+                  plan.featured ? 'text-brand-200' : 'text-brand-700'
+                }`}
+              >
+                {plan.tagline}
+              </p>
+              <h3 className={`mt-3 text-2xl ${plan.featured ? 'text-white' : 'text-brand-950'}`}>
+                {plan.name}
+              </h3>
+            </div>
+            {plan.featured ? (
+              <span className="rounded-full bg-action-400 px-3 py-1 text-xs font-semibold text-brand-950">
+                Recomendado
+              </span>
+            ) : null}
+          </div>
+
+          <p className={`mt-4 text-sm leading-relaxed ${plan.featured ? 'text-brand-100' : 'text-graphite-700'}`}>
+            {plan.summary}
           </p>
-        </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
-          {plans.map((plan, index) => (
-            <Reveal key={plan.name} delay={index * 80}>
-              <div className={`${plan.featured ? 'relative scale-105 shadow-elevated' : 'surface-card'} rounded-3xl p-8 ${plan.featured ? 'bg-gradient-to-br from-brand-900 to-brand-800 text-white' : ''}`}>
-                {plan.featured && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-300 px-4 py-1 text-xs font-bold uppercase tracking-wider text-brand-950">
-                    Más Popular
-                  </div>
-                )}
-                <h3 className={`text-2xl font-bold ${plan.featured ? 'text-white' : 'text-brand-950'}`}>
-                  {plan.name}
-                </h3>
-                <div className={`mt-4 flex items-baseline gap-1 ${plan.featured ? 'text-white' : 'text-brand-900'}`}>
-                  <span className="text-4xl font-bold">{plan.price}€</span>
-                  <span className="text-sm font-medium">{plan.period}</span>
-                </div>
-                <div className={`mt-3 rounded-xl bg-brand-50 px-3 py-2 text-xs font-semibold ${plan.featured ? 'bg-brand-700 text-brand-100' : 'text-brand-700'}`}>
-                  📅 Implementación: {plan.implementationTime}
-                </div>
-                <ul className="mt-6 space-y-3">
-                  {plan.features.map((feature, idx) => (
-                    <li key={idx} className={`flex items-start gap-2 text-sm ${plan.featured ? 'text-brand-100' : 'text-graphite-700'}`} dangerouslySetInnerHTML={{ __html: feature }}>
-                      <span className="mt-0.5 flex-shrink-0 text-brand-500">✓</span>
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  className={`mt-8 w-full rounded-2xl py-3 font-semibold transition-all ${plan.featured ? 'bg-brand-200 text-brand-950 hover:bg-brand-100' : 'btn-primary'}`}
-                >
-                  {plan.cta}
-                </button>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+          <div className={`mt-6 rounded-[1.35rem] p-4 ${plan.featured ? 'bg-white/10' : 'bg-brand-50'}`}>
+            <p className={`text-xs uppercase tracking-[0.12em] ${plan.featured ? 'text-brand-200' : 'text-brand-700'}`}>
+              Setup inicial
+            </p>
+            <p className={`mt-2 font-heading text-3xl ${plan.featured ? 'text-white' : 'text-brand-950'}`}>
+              {plan.setupPrice}
+            </p>
+            <p className={`mt-4 text-xs uppercase tracking-[0.12em] ${plan.featured ? 'text-brand-200' : 'text-brand-700'}`}>
+              Cuota mensual
+            </p>
+            <p className={`mt-2 font-heading text-3xl ${plan.featured ? 'text-white' : 'text-brand-950'}`}>
+              {plan.monthlyPrice}
+            </p>
+          </div>
 
-        <div className="mt-8 text-center text-sm text-graphite-600">
-          ✓ Sin contrato a largo plazo &nbsp;&nbsp;&nbsp; ✓ Cancela cuando quieras &nbsp;&nbsp;&nbsp; ✓ Garantía de satisfacción 30 días
-        </div>
-      </div>
-    </section>
+          <div className="mt-6 space-y-3">
+            <p className={`text-sm font-semibold ${plan.featured ? 'text-white' : 'text-brand-950'}`}>
+              Ideal para
+            </p>
+            <p className={`text-sm leading-relaxed ${plan.featured ? 'text-brand-100' : 'text-graphite-700'}`}>
+              {plan.idealFor}
+            </p>
+          </div>
+
+          <ul className="mt-6 space-y-3">
+            {plan.features.map((feature) => (
+              <li
+                key={feature}
+                className={`flex gap-3 text-sm leading-relaxed ${plan.featured ? 'text-brand-100' : 'text-graphite-700'}`}
+              >
+                <span className={`mt-1.5 h-2 w-2 rounded-full ${plan.featured ? 'bg-action-300' : 'bg-action-500'}`} />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+
+          {!compact ? (
+            <div className="mt-6 rounded-[1.25rem] border border-white/10 bg-white/5 p-4">
+              <p className={`text-xs uppercase tracking-[0.12em] ${plan.featured ? 'text-brand-200' : 'text-brand-700'}`}>
+                Lógica comercial
+              </p>
+              <p className={`mt-2 text-sm leading-relaxed ${plan.featured ? 'text-brand-100' : 'text-graphite-700'}`}>
+                {plan.pricingLogic}
+              </p>
+            </div>
+          ) : null}
+
+          <a href={plan.ctaHref} className={`${plan.featured ? 'btn-secondary bg-white text-brand-950 hover:bg-brand-50' : 'btn-primary'} mt-7 w-full`}>
+            {plan.ctaLabel}
+          </a>
+        </article>
+      ))}
+    </div>
   )
 }

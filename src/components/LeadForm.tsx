@@ -116,9 +116,9 @@ export function LeadForm() {
 
   return (
     <form className="surface-card p-6 lg:p-8" onSubmit={handleSubmit} noValidate>
-      <h3 className="text-2xl font-semibold">Solicitar diagnóstico</h3>
+      <h3 className="text-2xl font-semibold">Solicitar diagnóstico comercial</h3>
       <p className="mt-2 text-sm text-graphite-700">
-        Te contactamos para ver qué te está quitando más tiempo y por dónde conviene empezar.
+        Revisamos captación, seguimiento y cierre de leads para detectar dónde estás perdiendo velocidad y conversión.
       </p>
 
       <div className="mt-6 grid gap-4">
@@ -174,13 +174,13 @@ export function LeadForm() {
         </label>
 
         <label className="text-sm font-medium text-brand-900">
-          Qué te gustaría automatizar
+          Qué te gustaría mejorar
           <textarea
             value={formData.automationGoal}
             onChange={(event) => updateField('automationGoal', event.target.value)}
             rows={4}
             className="mt-2 w-full rounded-xl border border-graphite-300 bg-white px-3 py-2 text-sm text-brand-950 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
-            placeholder="Ejemplo: gestión de emails, generación de presupuestos, reporting interno..."
+            placeholder="Ejemplo: leads de Idealista y WhatsApp, seguimiento comercial, visitas, propuestas o cierre..."
           />
           {errors.automationGoal ? (
             <span className="mt-1 block text-xs text-red-700">{errors.automationGoal}</span>
@@ -210,11 +210,11 @@ export function LeadForm() {
         className="btn-primary mt-6 w-full"
         disabled={status === 'sending'}
       >
-        {status === 'sending' ? 'Enviando...' : 'Solicitar diagnóstico'}
+        {status === 'sending' ? 'Enviando...' : 'Solicitar diagnóstico comercial'}
       </button>
 
       <p className="mt-3 text-xs text-graphite-600">
-        Al enviar, aceptas que te contactemos para estudiar tu caso y proponerte un primer plan.
+        Al enviar, aceptas que te contactemos para estudiar tu embudo comercial y proponerte un primer plan.
       </p>
 
       {feedback ? (

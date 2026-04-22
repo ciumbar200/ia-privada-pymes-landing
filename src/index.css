@@ -9,6 +9,11 @@
     scroll-behavior: smooth;
   }
 
+  body,
+  #root {
+    min-height: 100vh;
+  }
+
   body {
     @apply m-0 bg-brand-50 font-sans text-brand-900 antialiased;
     background-image:
@@ -35,6 +40,10 @@
 
   ::selection {
     @apply bg-brand-200 text-brand-950;
+  }
+
+  [id] {
+    scroll-margin-top: 5.5rem;
   }
 }
 

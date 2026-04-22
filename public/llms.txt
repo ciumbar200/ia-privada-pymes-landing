@@ -1,17 +1,23 @@
-# Nexo IA Empresas
+# Noxo IA Empresas
 
-> Automatización de procesos para micropymes y pymes con enfoque en privacidad, control de datos y resultados medibles.
+> Equipos digitales para captar, responder, organizar y seguir leads sin desorden, retrasos ni trabajo manual innecesario.
+
+## Verticales principales
+- Coliving y flex living
+- Inmobiliarias y property managers
+- Clínicas, centros estéticos y salud privada
+- Academias y formación
 
 ## Servicios principales
-- Diagnóstico inicial de automatización.
-- Implantación de agentes de IA en local, híbrido o con APIs externas.
-- Formación al equipo y mantenimiento continuo.
+- Cómo funciona el equipo digital
+- Planes y precios visibles
+- Recursos sobre leads, seguimiento y organización comercial
 
-## Mensaje clave
-- Menos tareas manuales.
-- Más tiempo para negocio.
-- Privacidad y seguridad desde el diseño.
+## Propuesta
+- Marca madre orientada a leads y proceso comercial
+- Oferta entendible por cualquier dueño de negocio
+- Sistema operativo comercial con equipos digitales
 
 ## Contacto
-- Landing principal: https://nexoiaempresas.com/
-- CTA principal: Solicitar diagnóstico.
+- Landing principal: https://noxoiaempresas.com/
+- CTA principal: Solicitar diagnóstico comercial.
