@@ -5,7 +5,7 @@ export type SubmitLeadResult =
   | { status: 'not_configured' }
   | { status: 'error'; message: string }
 
-const leadEndpoint = import.meta.env.VITE_LEAD_ENDPOINT_URL?.trim() || '/api/submit'
+const leadEndpoint = import.meta.env.VITE_LEAD_ENDPOINT_URL?.trim() || '/api/lead'
 
 export async function submitLead(data: LeadFormData): Promise<SubmitLeadResult> {
   try {

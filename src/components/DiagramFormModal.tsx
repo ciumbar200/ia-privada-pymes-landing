@@ -45,6 +45,7 @@ function Backdrop({ onClose, children }: { onClose: () => void; children: React.
 
 function StepText({
   question,
+  fieldName,
   value,
   placeholder,
   type,
@@ -53,6 +54,7 @@ function StepText({
   onEnter,
 }: {
   question: string
+  fieldName: string
   value: string
   placeholder: string
   type: 'text' | 'email' | 'tel'
@@ -65,6 +67,7 @@ function StepText({
       <p className="font-heading text-2xl leading-snug text-brand-950">{question}</p>
       <input
         autoFocus
+        name={fieldName}
         type={type}
         value={value}
         autoComplete={autoComplete}
@@ -243,6 +246,7 @@ export function DiagramFormModal({ open, onClose }: { open: boolean; onClose: ()
         return (
           <StepText
             question="¿Cómo te llamas?"
+            fieldName="nombre"
             value={data.name}
             placeholder="Tu nombre"
             type="text"
@@ -255,6 +259,7 @@ export function DiagramFormModal({ open, onClose }: { open: boolean; onClose: ()
         return (
           <StepText
             question="¿En qué empresa trabajas?"
+            fieldName="empresa"
             value={data.company}
             placeholder="Nombre de tu empresa"
             type="text"
@@ -267,6 +272,7 @@ export function DiagramFormModal({ open, onClose }: { open: boolean; onClose: ()
         return (
           <StepText
             question="¿Cuál es tu email?"
+            fieldName="email"
             value={data.email}
             placeholder="tu@empresa.com"
             type="email"
@@ -279,6 +285,7 @@ export function DiagramFormModal({ open, onClose }: { open: boolean; onClose: ()
         return (
           <StepText
             question="¿Qué teléfono usamos para contactarte?"
+            fieldName="telefono"
             value={data.phone}
             placeholder="+34 600 000 000"
             type="tel"

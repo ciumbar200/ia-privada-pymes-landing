@@ -1,7 +1,9 @@
 import { useEffect, useState, type ReactNode } from 'react'
+import { ApolloInboundLoader } from './components/ApolloInboundLoader'
 import { Footer } from './components/Footer'
 import { DigitalTeamDiagram } from './components/DigitalTeamDiagram'
 import { DiagramFormModal } from './components/DiagramFormModal'
+import { MeetingBar } from './components/MeetingBar'
 import { FaqItem } from './components/FaqItem'
 import { LeadForm } from './components/LeadForm'
 import { MobileStickyCta } from './components/MobileStickyCta'
@@ -248,6 +250,7 @@ function MetricsStrip({ stats }: { stats: NonNullable<PageData['stats']> }) {
 }
 
 function HomePage() {
+  const [modalOpen, setModalOpen] = useState(false)
   const stats = homePage.stats || []
   const examples = homePage.examples || []
   const problemPoints = homePage.problemPoints || []
@@ -262,6 +265,19 @@ function HomePage() {
         <section className="py-8">
           <div className="section-shell">
             <MetricsStrip stats={stats} />
+          </div>
+        </section>
+      ) : null}
+
+      {homePage.teamDiagram ? (
+        <section className="py-10 lg:py-14">
+          <div className="section-shell">
+            <DiagramFormModal open={modalOpen} onClose={() => setModalOpen(false)} />
+            <DigitalTeamDiagram
+              diagram={homePage.teamDiagram}
+              pagePath="/"
+              onCtaClick={() => setModalOpen(true)}
+            />
           </div>
         </section>
       ) : null}
@@ -362,7 +378,7 @@ function HomePage() {
         title={homePage.pricingTitle || ''}
         intro={homePage.pricingIntro || ''}
       >
-        <Pricing plans={homePage.pricingPlans || []} compact />
+        <Pricing plans={homePage.pricingPlans || []} compact onCtaClick={() => setModalOpen(true)} />
         {pricingNotes.length > 0 ? (
           <div className="mt-8 grid gap-3 md:grid-cols-3">
             {pricingNotes.map((note) => (
@@ -615,10 +631,13 @@ function NichePage({ page }: { page: PageData }) {
 }
 
 function PricingPage({ page }: { page: PageData }) {
+  const [modalOpen, setModalOpen] = useState(false)
+
   return (
     <>
+      <DiagramFormModal open={modalOpen} onClose={() => setModalOpen(false)} />
       <SectionBlock eyebrow="Planes" title={page.pricingTitle || ''} intro={page.pricingIntro || ''}>
-        <Pricing plans={page.pricingPlans || []} />
+        <Pricing plans={page.pricingPlans || []} onCtaClick={() => setModalOpen(true)} />
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {(page.pricingNotes || []).map((note) => (
             <article key={note} className="rounded-[1.35rem] border border-white/80 bg-white/92 p-4 text-sm leading-relaxed text-graphite-700 shadow-soft">
@@ -788,6 +807,7 @@ function App() {
 
   return (
     <div className="relative isolate overflow-x-hidden pb-24 md:pb-0">
+      <ApolloInboundLoader />
       <SeoStructuredData currentPage={currentPage} allPages={allPages} />
       <div
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[40rem] bg-gradient-to-b from-brand-200/35 via-brand-100/10 to-transparent"
@@ -925,6 +945,7 @@ function App() {
 
       <Footer brand={brandName} linkGroups={footerLinkGroups} />
       <MobileStickyCta />
+      <MeetingBar />
     </div>
   )
 }

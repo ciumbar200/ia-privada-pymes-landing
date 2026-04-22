@@ -1,6 +1,7 @@
 export const brandName = 'Noxo AI Empresas'
 export const siteUrl = 'https://noxoiaempresas.com'
 export const contactSectionId = 'contacto'
+export const meetingUrl = 'https://meet.brevo.com/virgil-buibar'
 
 export interface FaqEntry {
   question: string
@@ -413,6 +414,64 @@ export const homePage: PageData = {
     { label: 'Foco', value: 'Leads y seguimiento' },
     { label: 'Resultado', value: 'Más orden' },
   ],
+  teamDiagram: {
+    title: 'Tu equipo digital trabaja. Tú te centras en lo que importa.',
+    subtitle: 'Seis empleados digitales trabajando en paralelo mientras tú vendes, atiendes y decides. Sin delegar en personas adicionales.',
+    supportText: 'Esto no es un CRM ni otra herramienta que aprender. Es un equipo que hace el operativo por ti: captar leads, responder rápido, clasificar, seguir, publicar en redes y gestionar campañas. Todo coordinado y con visibilidad desde el primer día.',
+    ctaLabel: 'Quiero este equipo para mi empresa',
+    ctaHref: '/#contacto',
+    centralRole: {
+      title: 'Tú y tu negocio',
+      tag: 'el centro',
+      summary: 'Tú te centras en vender, atender y decidir. El equipo digital hace el operativo que hoy te roba tiempo y energía.',
+      example: 'Llegas a la oficina con los leads del día ya organizados, los seguimientos activos y el contenido de redes publicado.',
+      benefit: 'Menos caos. Más foco. El negocio avanza aunque no estés pendiente de todo.',
+    },
+    roles: [
+      {
+        title: 'Captador de leads',
+        tag: 'captura',
+        summary: 'Recoge leads desde todos tus canales en un solo flujo sin duplicados ni pérdidas.',
+        example: 'Un lead de Google Ads, uno de Instagram y uno del formulario web entran al mismo tiempo. Ninguno se pierde.',
+        benefit: 'Nunca más un lead perdido por caos de canales, aunque entren diez a la vez.',
+      },
+      {
+        title: 'Respondedor',
+        tag: 'responde',
+        summary: 'Responde a cada lead en minutos con el mensaje correcto, sin que tengas que estar pendiente.',
+        example: 'Son las 22:00 y entra una consulta por WhatsApp. El respondedor actúa antes de que el lead se vaya con otro.',
+        benefit: 'Más velocidad. Mejor primera impresión. Sin horarios ni depender de quién esté disponible.',
+      },
+      {
+        title: 'Clasificador',
+        tag: 'clasifica',
+        summary: 'Ordena y prioriza leads para que sepas exactamente cuáles merecen tu tiempo.',
+        example: 'Separa los que tienen intención real de compra de los que aún están explorando, y los pone en el orden correcto.',
+        benefit: 'Tu tiempo va solo a las oportunidades que más valen.',
+      },
+      {
+        title: 'Gestor de seguimiento',
+        tag: 'sigue',
+        summary: 'Hace el seguimiento con criterio para que ningún lead se enfríe por olvido o falta de tiempo.',
+        example: 'Un lead no respondió. Dos días después, el gestor lanza un recontacto diferente al primero.',
+        benefit: 'Más oportunidades rescatadas. Sin depender de tu memoria ni de urgencias.',
+      },
+      {
+        title: 'Publicador de redes',
+        tag: 'publica',
+        summary: 'Crea y publica contenido en tus redes sociales con regularidad y sin que tengas que estar detrás.',
+        example: 'Publica tres veces por semana en LinkedIn e Instagram con el tono y el formato adecuado a cada canal.',
+        benefit: 'Presencia constante en redes sin dedicar horas del equipo a crear y publicar.',
+      },
+      {
+        title: 'Gestor de campañas',
+        tag: 'ads',
+        summary: 'Supervisa y ajusta tus campañas de Google para que los leads sean de calidad y el coste sea razonable.',
+        example: 'Detecta que una campaña trae leads de baja calidad y ajusta la segmentación antes de que el presupuesto se desperdicie.',
+        benefit: 'Más leads útiles por cada euro invertido en publicidad.',
+      },
+    ],
+  },
   pricingTitle: 'Precios visibles para filtrar bien desde el principio',
   pricingIntro:
     'Mostramos precios porque ayudan a entender el alcance, comparar rápido y evitar llamadas improductivas.',

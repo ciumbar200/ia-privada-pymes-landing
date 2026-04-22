@@ -119,6 +119,7 @@ export function LeadForm() {
           Nombre
           <input
             id="nombre"
+            name="nombre"
             type="text"
             value={formData.name}
             onChange={(event) => updateField('name', event.target.value)}
@@ -132,6 +133,7 @@ export function LeadForm() {
           Empresa
           <input
             id="empresa"
+            name="empresa"
             type="text"
             value={formData.company}
             onChange={(event) => updateField('company', event.target.value)}
@@ -145,6 +147,7 @@ export function LeadForm() {
           Email
           <input
             id="email"
+            name="email"
             type="email"
             value={formData.email}
             onChange={(event) => updateField('email', event.target.value)}
@@ -158,6 +161,7 @@ export function LeadForm() {
           Teléfono
           <input
             id="telefono"
+            name="telefono"
             type="tel"
             value={formData.phone}
             onChange={(event) => updateField('phone', event.target.value)}
@@ -171,6 +175,7 @@ export function LeadForm() {
           Sector
           <select
             id="sector"
+            name="sector"
             value={formData.sector}
             onChange={(event) => updateField('sector', event.target.value as LeadSector)}
             className="mt-2 w-full rounded-xl border border-graphite-300 bg-white px-3 py-2 text-sm text-brand-950 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"

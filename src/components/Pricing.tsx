@@ -3,9 +3,10 @@ import type { PricingPlan } from '../data/content'
 interface PricingProps {
   plans: PricingPlan[]
   compact?: boolean
+  onCtaClick?: () => void
 }
 
-export function Pricing({ plans, compact = false }: PricingProps) {
+export function Pricing({ plans, compact = false, onCtaClick }: PricingProps) {
   return (
     <div className={`grid gap-6 ${compact ? 'xl:grid-cols-3' : 'lg:grid-cols-3'}`}>
       {plans.map((plan) => (
@@ -88,9 +89,19 @@ export function Pricing({ plans, compact = false }: PricingProps) {
             </div>
           ) : null}
 
-          <a href={plan.ctaHref} className={`${plan.featured ? 'btn-secondary bg-white text-brand-950 hover:bg-brand-50' : 'btn-primary'} mt-7 w-full`}>
-            {plan.ctaLabel}
-          </a>
+          {onCtaClick ? (
+            <button
+              type="button"
+              onClick={onCtaClick}
+              className={`${plan.featured ? 'btn-secondary bg-white text-brand-950 hover:bg-brand-50' : 'btn-primary'} mt-7 w-full`}
+            >
+              {plan.ctaLabel}
+            </button>
+          ) : (
+            <a href={plan.ctaHref} className={`${plan.featured ? 'btn-secondary bg-white text-brand-950 hover:bg-brand-50' : 'btn-primary'} mt-7 w-full`}>
+              {plan.ctaLabel}
+            </a>
+          )}
         </article>
       ))}
     </div>
