@@ -3,6 +3,7 @@ import { ApolloInboundLoader } from './components/ApolloInboundLoader'
 import { Footer } from './components/Footer'
 import { DigitalTeamDiagram } from './components/DigitalTeamDiagram'
 import { DiagramFormModal } from './components/DiagramFormModal'
+import { LanguageSwitcher } from './components/LanguageSwitcher'
 import { MeetingBar } from './components/MeetingBar'
 import { FaqItem } from './components/FaqItem'
 import { LeadForm } from './components/LeadForm'
@@ -26,6 +27,19 @@ import {
   type LinkEntry,
   type PageData,
 } from './data/content'
+import { useLanguage } from './i18n/LanguageContext'
+import {
+  allPagesEn,
+  featuredResourcesEn,
+  footerLinkGroupsEn,
+  homePageEn,
+  nicheLinkEn,
+  pagesByPathEn,
+  primaryNavEn,
+  resourceCategoriesEn,
+  whatsappShortMessageEn,
+} from './i18n/content-en'
+import { ui } from './i18n/ui'
 import { trackEvent } from './lib/analytics'
 
 function normalizePath(pathname: string) {
@@ -90,6 +104,8 @@ function SectionBlock({
 }
 
 function LinkCard({ link }: { link: LinkEntry }) {
+  const { lang } = useLanguage()
+  const t = ui[lang]
   return (
     <a
       href={link.href}
@@ -97,14 +113,24 @@ function LinkCard({ link }: { link: LinkEntry }) {
     >
       <p className="font-heading text-xl text-brand-950">{link.label}</p>
       {link.description ? <p className="mt-3 text-sm leading-relaxed text-graphite-700">{link.description}</p> : null}
-      <span className="mt-5 inline-flex text-sm font-semibold text-action-700">Entrar</span>
+      <span className="mt-5 inline-flex text-sm font-semibold text-action-700">{t.navEnter}</span>
     </a>
   )
 }
 
-function Header({ currentPage }: { currentPage: PageData }) {
+function Header({
+  currentPage,
+  nav,
+  onOpenDiagnosisModal,
+}: {
+  currentPage: PageData
+  nav: typeof primaryNav
+  onOpenDiagnosisModal: () => void
+}) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { lang } = useLanguage()
+  const t = ui[lang]
 
   useEffect(() => {
     function handleScroll() {
@@ -134,13 +160,13 @@ function Header({ currentPage }: { currentPage: PageData }) {
         <a
           href="/"
           className="inline-flex min-w-0 items-center font-heading text-base font-semibold tracking-tight text-brand-950"
-          aria-label={`${brandName} - Inicio`}
+          aria-label={`${brandName} - ${t.navAriaLogo}`}
         >
           {brandName}
         </a>
 
-        <nav className="hidden items-center gap-2 lg:flex" aria-label="Navegación principal">
-          {primaryNav.map((item) => (
+        <nav className="hidden items-center gap-2 lg:flex" aria-label={t.navAriaMain}>
+          {nav.map((item) => (
             <a
               key={item.href}
               href={resolveNavHref(item.href)}
@@ -155,30 +181,38 @@ function Header({ currentPage }: { currentPage: PageData }) {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
+          <LanguageSwitcher />
           <a
             href="/precios"
             className="btn-secondary"
             onClick={() => trackEvent('cta_click', { location: 'nav', type: 'secondary' })}
           >
-            Ver precios
+            {t.navPricing}
           </a>
-          <a
-            href={currentPage.path === '/' ? `#${contactSectionId}` : `/#${contactSectionId}`}
+          <button
+            type="button"
             className="btn-primary"
-            onClick={() => trackEvent('cta_click', { location: 'nav', type: 'primary' })}
+            onClick={() => {
+              trackEvent('cta_click', { location: 'nav', type: 'primary' })
+              onOpenDiagnosisModal()
+            }}
           >
-            Solicitar diagnóstico
-          </a>
+            {t.navDiagnosis}
+          </button>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
-          <a
-            href={currentPage.path === '/' ? `#${contactSectionId}` : `/#${contactSectionId}`}
+          <LanguageSwitcher />
+          <button
+            type="button"
             className="inline-flex items-center rounded-lg bg-action-500 px-3 py-2 text-xs font-semibold text-white shadow-cta"
-            onClick={() => trackEvent('cta_click', { location: 'mobile_top', type: 'primary' })}
+            onClick={() => {
+              trackEvent('cta_click', { location: 'mobile_top', type: 'primary' })
+              onOpenDiagnosisModal()
+            }}
           >
-            Diagnóstico
-          </a>
+            {t.navDiagnosisShort}
+          </button>
           <button
             type="button"
             className="inline-flex items-center rounded-lg border border-brand-200 bg-white px-3 py-2 text-sm font-semibold text-brand-900 shadow-soft"
@@ -186,15 +220,15 @@ function Header({ currentPage }: { currentPage: PageData }) {
             aria-expanded={open}
             aria-controls="mobile-nav"
           >
-            Menú
+            {t.navMenu}
           </button>
         </div>
       </div>
 
       {open ? (
         <div id="mobile-nav" className="border-t border-brand-100 bg-white/95 shadow-soft lg:hidden">
-          <nav className="section-shell flex flex-col gap-3 py-4" aria-label="Navegación móvil">
-            {primaryNav.map((item) => (
+          <nav className="section-shell flex flex-col gap-3 py-4" aria-label={t.navAriaMobile}>
+            {nav.map((item) => (
               <a
                 key={item.href}
                 href={resolveNavHref(item.href)}
@@ -214,18 +248,19 @@ function Header({ currentPage }: { currentPage: PageData }) {
                 setOpen(false)
               }}
             >
-              Ver precios
+              {t.navPricing}
             </a>
-            <a
-              href={currentPage.path === '/' ? `#${contactSectionId}` : `/#${contactSectionId}`}
+            <button
+              type="button"
               className="btn-primary"
               onClick={() => {
                 trackEvent('cta_click', { location: 'mobile_nav', type: 'primary' })
                 setOpen(false)
+                onOpenDiagnosisModal()
               }}
             >
-              Solicitar diagnóstico
-            </a>
+              {t.navDiagnosis}
+            </button>
           </nav>
         </div>
       ) : null}
@@ -249,15 +284,17 @@ function MetricsStrip({ stats }: { stats: NonNullable<PageData['stats']> }) {
   )
 }
 
-function HomePage() {
+function HomePage({ page, niches, resources }: { page: PageData; niches: typeof nicheLinks; resources: typeof featuredResources }) {
   const [modalOpen, setModalOpen] = useState(false)
-  const stats = homePage.stats || []
-  const examples = homePage.examples || []
-  const problemPoints = homePage.problemPoints || []
-  const deliverables = homePage.deliverables || []
-  const outcomes = homePage.outcomes || []
-  const process = homePage.process || []
-  const pricingNotes = homePage.pricingNotes || []
+  const { lang } = useLanguage()
+  const t = ui[lang]
+  const stats = page.stats || []
+  const examples = page.examples || []
+  const problemPoints = page.problemPoints || []
+  const deliverables = page.deliverables || []
+  const outcomes = page.outcomes || []
+  const process = page.process || []
+  const pricingNotes = page.pricingNotes || []
 
   return (
     <>
@@ -269,12 +306,12 @@ function HomePage() {
         </section>
       ) : null}
 
-      {homePage.teamDiagram ? (
+      {page.teamDiagram ? (
         <section className="py-10 lg:py-14">
           <div className="section-shell">
             <DiagramFormModal open={modalOpen} onClose={() => setModalOpen(false)} />
             <DigitalTeamDiagram
-              diagram={homePage.teamDiagram}
+              diagram={page.teamDiagram}
               pagePath="/"
               onCtaClick={() => setModalOpen(true)}
             />
@@ -283,13 +320,13 @@ function HomePage() {
       ) : null}
 
       <SectionBlock
-        eyebrow="Qué es"
-        title={homePage.solutionTitle || 'Qué es un equipo digital'}
-        intro={homePage.solutionIntro || ''}
+        eyebrow={t.eyebrowWhatIs}
+        title={page.solutionTitle || ''}
+        intro={page.solutionIntro || ''}
       >
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-[2rem] border border-brand-200 bg-brand-950 p-8 text-white shadow-elevated">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-200">Trabajo del equipo digital</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-200">{t.darkCardDigitalTeam}</p>
             <ul className="mt-6 space-y-4">
               {deliverables.map((item) => (
                 <li key={item} className="flex gap-3 text-sm leading-relaxed text-brand-50">
@@ -313,9 +350,9 @@ function HomePage() {
 
       <SectionBlock
         id="problema"
-        eyebrow="Problema"
-        title={homePage.problemTitle || ''}
-        intro={homePage.problemIntro || ''}
+        eyebrow={t.eyebrowProblem}
+        title={page.problemTitle || ''}
+        intro={page.problemIntro || ''}
         subdued
       >
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
@@ -329,14 +366,14 @@ function HomePage() {
 
       <SectionBlock
         id="como-funciona"
-        eyebrow="Cómo funciona"
-        title={homePage.processTitle || ''}
-        intro="El objetivo no es añadir otra herramienta. Es implantar un sistema simple que el equipo entienda y use."
+        eyebrow={t.eyebrowHowItWorks}
+        title={page.processTitle || ''}
+        intro={t.introHomeHowItWorks}
       >
         <div className="grid gap-4 lg:grid-cols-4">
           {process.map((step, index) => (
             <article key={step} className="rounded-[1.75rem] border border-white/80 bg-white/92 p-6 shadow-soft">
-              <p className="text-sm font-semibold uppercase tracking-[0.12em] text-action-700">Paso {index + 1}</p>
+              <p className="text-sm font-semibold uppercase tracking-[0.12em] text-action-700">{t.stepPrefix} {index + 1}</p>
               <p className="mt-4 text-sm leading-relaxed text-graphite-700">{step}</p>
             </article>
           ))}
@@ -344,9 +381,9 @@ function HomePage() {
       </SectionBlock>
 
       <SectionBlock
-        eyebrow="Qué tareas cubre"
-        title={homePage.examplesTitle || ''}
-        intro={homePage.examplesIntro || ''}
+        eyebrow={t.eyebrowWhatCovers}
+        title={page.examplesTitle || ''}
+        intro={page.examplesIntro || ''}
       >
         <div className="grid gap-4 lg:grid-cols-3">
           {examples.map((item) => (
@@ -360,13 +397,13 @@ function HomePage() {
 
       <SectionBlock
         id="sectores"
-        eyebrow="Sectores"
-        title="Elegimos cuatro sectores donde este sistema encaja especialmente bien"
-        intro="Aplicamos la misma lógica de orden y seguimiento, adaptada a cómo trabajan y venden estos negocios."
+        eyebrow={t.eyebrowSectors}
+        title={t.titleSectors}
+        intro={t.introSectors}
         subdued
       >
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {nicheLinks.map((link) => (
+          {niches.map((link) => (
             <LinkCard key={link.href} link={link} />
           ))}
         </div>
@@ -374,11 +411,11 @@ function HomePage() {
 
       <SectionBlock
         id="precios"
-        eyebrow="Precios"
-        title={homePage.pricingTitle || ''}
-        intro={homePage.pricingIntro || ''}
+        eyebrow={t.eyebrowPricing}
+        title={page.pricingTitle || ''}
+        intro={page.pricingIntro || ''}
       >
-        <Pricing plans={homePage.pricingPlans || []} compact onCtaClick={() => setModalOpen(true)} />
+        <Pricing plans={page.pricingPlans || []} compact onCtaClick={() => setModalOpen(true)} />
         {pricingNotes.length > 0 ? (
           <div className="mt-8 grid gap-3 md:grid-cols-3">
             {pricingNotes.map((note) => (
@@ -391,13 +428,13 @@ function HomePage() {
       </SectionBlock>
 
       <SectionBlock
-        eyebrow="Recursos"
-        title="Guías útiles para responder antes, seguir mejor y no perder oportunidades"
-        intro="Contenido práctico para entender el problema, ordenar el proceso y tomar una mejor decisión."
+        eyebrow={t.eyebrowResources}
+        title={t.introHomeResources}
+        intro={t.introHomeResourcesSub}
         subdued
       >
         <div className="grid gap-5 lg:grid-cols-3">
-          {featuredResources.map((post) => (
+          {resources.map((post) => (
             <LinkCard key={post.path} link={{ href: post.path, label: post.title, description: post.excerpt }} />
           ))}
         </div>
@@ -408,14 +445,14 @@ function HomePage() {
 
 function ServicePage({ page }: { page: PageData }) {
   const [modalOpen, setModalOpen] = useState(false)
+  const { lang } = useLanguage()
+  const t = ui[lang]
 
   return (
     <>
       <div className="section-shell pt-8">
         <nav aria-label="Breadcrumb" className="text-sm text-graphite-600">
-          <a href="/" className="hover:text-brand-900">
-            Inicio
-          </a>
+          <a href="/" className="hover:text-brand-900">{t.breadcrumbHome}</a>
           <span className="mx-2">/</span>
           <span>{page.label}</span>
         </nav>
@@ -429,7 +466,7 @@ function ServicePage({ page }: { page: PageData }) {
         </section>
       ) : null}
 
-      <SectionBlock eyebrow="Problema" title={page.problemTitle || ''} intro={page.problemIntro || ''}>
+      <SectionBlock eyebrow={t.eyebrowProblem} title={page.problemTitle || ''} intro={page.problemIntro || ''}>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {(page.problemPoints || []).map((point) => (
             <article key={point} className="rounded-[1.6rem] border border-white/70 bg-white/88 p-6 shadow-soft">
@@ -439,10 +476,10 @@ function ServicePage({ page }: { page: PageData }) {
         </div>
       </SectionBlock>
 
-      <SectionBlock eyebrow="Qué incluye" title={page.solutionTitle || ''} intro={page.solutionIntro || ''} subdued>
+      <SectionBlock eyebrow={t.eyebrowWhatIncludes} title={page.solutionTitle || ''} intro={page.solutionIntro || ''} subdued>
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-[2rem] border border-brand-200 bg-brand-950 p-8 text-white shadow-elevated">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-200">Incluye</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-200">{t.darkCardIncludes}</p>
             <ul className="mt-6 space-y-4">
               {(page.deliverables || []).map((item) => (
                 <li key={item} className="flex gap-3 text-sm leading-relaxed text-brand-50">
@@ -478,11 +515,11 @@ function ServicePage({ page }: { page: PageData }) {
       ) : null}
 
       {page.processTitle ? (
-        <SectionBlock eyebrow="Cómo se implementa" title={page.processTitle} intro="La implantación busca claridad y uso real, no complejidad técnica.">
+        <SectionBlock eyebrow={t.eyebrowImplementation} title={page.processTitle} intro={t.introImplementation}>
           <div className="grid gap-4 lg:grid-cols-4">
             {(page.process || []).map((step, index) => (
               <article key={step} className="rounded-[1.75rem] border border-white/80 bg-white/92 p-6 shadow-soft">
-                <p className="text-sm font-semibold uppercase tracking-[0.12em] text-action-700">Paso {index + 1}</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.12em] text-action-700">{t.stepPrefix} {index + 1}</p>
                 <p className="mt-4 text-sm leading-relaxed text-graphite-700">{step}</p>
               </article>
             ))}
@@ -491,7 +528,7 @@ function ServicePage({ page }: { page: PageData }) {
       ) : null}
 
       {page.examplesTitle ? (
-        <SectionBlock eyebrow="Casos concretos" title={page.examplesTitle} intro={page.examplesIntro || ''} subdued>
+        <SectionBlock eyebrow={t.eyebrowConcreteCases} title={page.examplesTitle} intro={page.examplesIntro || ''} subdued>
           <div className="grid gap-4 lg:grid-cols-3">
             {(page.examples || []).map((item) => (
               <article key={item.title} className="rounded-[1.75rem] border border-white/80 bg-white/92 p-6 shadow-soft">
@@ -504,7 +541,7 @@ function ServicePage({ page }: { page: PageData }) {
       ) : null}
 
       {page.objections && page.objections.length > 0 ? (
-        <SectionBlock eyebrow="Objeciones" title={page.objectionsTitle || 'Objeciones habituales'} intro="Resolvemos las dudas que más frenan la decisión comercial.">
+        <SectionBlock eyebrow={t.eyebrowObjections} title={page.objectionsTitle || t.eyebrowObjections} intro={t.introObjections}>
           <div className="grid gap-4 md:grid-cols-3">
             {page.objections.map((item) => (
               <article key={item} className="rounded-[1.75rem] border border-white/80 bg-white/92 p-6 shadow-soft">
@@ -516,7 +553,7 @@ function ServicePage({ page }: { page: PageData }) {
       ) : null}
 
       {page.relatedLinks.length > 0 ? (
-        <SectionBlock title="Páginas relacionadas" intro="Desde aquí puedes ir a otras páginas útiles según el punto en el que estés de la decisión." subdued>
+        <SectionBlock title={t.titleRelatedPages} intro={t.introRelatedService} subdued>
           <div className="grid gap-5 lg:grid-cols-3">
             {page.relatedLinks.map((link) => (
               <LinkCard key={`${page.path}-${link.href}`} link={link} />
@@ -529,13 +566,14 @@ function ServicePage({ page }: { page: PageData }) {
 }
 
 function NichePage({ page }: { page: PageData }) {
+  const { lang } = useLanguage()
+  const t = ui[lang]
+
   return (
     <>
       <div className="section-shell pt-8">
         <nav aria-label="Breadcrumb" className="text-sm text-graphite-600">
-          <a href="/" className="hover:text-brand-900">
-            Inicio
-          </a>
+          <a href="/" className="hover:text-brand-900">{t.breadcrumbHome}</a>
           <span className="mx-2">/</span>
           <span>{page.label}</span>
         </nav>
@@ -549,7 +587,7 @@ function NichePage({ page }: { page: PageData }) {
         </section>
       ) : null}
 
-      <SectionBlock eyebrow="Dolor del sector" title={page.problemTitle || ''} intro={page.problemIntro || ''}>
+      <SectionBlock eyebrow={t.eyebrowSectorPain} title={page.problemTitle || ''} intro={page.problemIntro || ''}>
         <div className="grid gap-4 md:grid-cols-2">
           {(page.problemPoints || []).map((point) => (
             <article key={point} className="rounded-[1.6rem] border border-white/70 bg-white/88 p-6 shadow-soft">
@@ -568,7 +606,7 @@ function NichePage({ page }: { page: PageData }) {
       ) : null}
 
       {page.examplesTitle ? (
-        <SectionBlock eyebrow="Ejemplos del vertical" title={page.examplesTitle} intro={page.examplesIntro || ''} subdued>
+        <SectionBlock eyebrow={t.eyebrowVerticalExamples} title={page.examplesTitle} intro={page.examplesIntro || ''} subdued>
           <div className="grid gap-4 lg:grid-cols-3">
             {(page.examples || []).map((item) => (
               <article key={item.title} className="rounded-[1.75rem] border border-white/80 bg-white/92 p-6 shadow-soft">
@@ -580,10 +618,10 @@ function NichePage({ page }: { page: PageData }) {
         </SectionBlock>
       ) : null}
 
-      <SectionBlock eyebrow="Qué hace el equipo digital" title={page.solutionTitle || ''} intro={page.solutionIntro || ''}>
+      <SectionBlock eyebrow={t.eyebrowWhatDigitalTeam} title={page.solutionTitle || ''} intro={page.solutionIntro || ''}>
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-[2rem] border border-brand-200 bg-brand-950 p-8 text-white shadow-elevated">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-200">Trabajo del equipo digital</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-200">{t.darkCardDigitalTeam}</p>
             <ul className="mt-6 space-y-4">
               {(page.deliverables || []).map((item) => (
                 <li key={item} className="flex gap-3 text-sm leading-relaxed text-brand-50">
@@ -606,7 +644,7 @@ function NichePage({ page }: { page: PageData }) {
       </SectionBlock>
 
       {page.fitTitle ? (
-        <SectionBlock eyebrow="Encaje" title={page.fitTitle} intro="La lógica es la misma: responder antes, ordenar mejor y seguir cada oportunidad con más constancia." subdued>
+        <SectionBlock eyebrow={t.eyebrowFit} title={page.fitTitle} intro={t.introNicheFit} subdued>
           <div className="grid gap-4 md:grid-cols-3">
             {(page.fitPoints || []).map((point) => (
               <article key={point} className="rounded-[1.75rem] border border-white/80 bg-white/92 p-6 shadow-soft">
@@ -618,7 +656,7 @@ function NichePage({ page }: { page: PageData }) {
       ) : null}
 
       {page.relatedLinks.length > 0 ? (
-        <SectionBlock title="Siguiente paso" intro="Desde aquí puedes ir a la explicación completa, al precio o al contenido relacionado con este vertical.">
+        <SectionBlock title={t.titleNextStep} intro={t.introNicheRelated}>
           <div className="grid gap-5 lg:grid-cols-3">
             {page.relatedLinks.map((link) => (
               <LinkCard key={`${page.path}-${link.href}`} link={link} />
@@ -632,11 +670,13 @@ function NichePage({ page }: { page: PageData }) {
 
 function PricingPage({ page }: { page: PageData }) {
   const [modalOpen, setModalOpen] = useState(false)
+  const { lang } = useLanguage()
+  const t = ui[lang]
 
   return (
     <>
       <DiagramFormModal open={modalOpen} onClose={() => setModalOpen(false)} />
-      <SectionBlock eyebrow="Planes" title={page.pricingTitle || ''} intro={page.pricingIntro || ''}>
+      <SectionBlock eyebrow={t.eyebrowPlans} title={page.pricingTitle || ''} intro={page.pricingIntro || ''}>
         <Pricing plans={page.pricingPlans || []} onCtaClick={() => setModalOpen(true)} />
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {(page.pricingNotes || []).map((note) => (
@@ -648,7 +688,7 @@ function PricingPage({ page }: { page: PageData }) {
       </SectionBlock>
 
       {page.examplesTitle ? (
-        <SectionBlock eyebrow="Cómo elegir" title={page.examplesTitle} intro={page.examplesIntro || ''} subdued>
+        <SectionBlock eyebrow={t.eyebrowHowToChoose} title={page.examplesTitle} intro={page.examplesIntro || ''} subdued>
           <div className="grid gap-4 md:grid-cols-3">
             {(page.examples || []).map((item) => (
               <article key={item.title} className="rounded-[1.75rem] border border-white/80 bg-white/92 p-6 shadow-soft">
@@ -661,7 +701,7 @@ function PricingPage({ page }: { page: PageData }) {
       ) : null}
 
       {page.relatedLinks.length > 0 ? (
-        <SectionBlock title="Páginas relacionadas" intro="Antes de decidir plan, revisa cómo funciona el sistema o aterrízalo a tu vertical.">
+        <SectionBlock title={t.titleRelatedPages} intro={t.introPricingRelated}>
           <div className="grid gap-5 lg:grid-cols-3">
             {page.relatedLinks.map((link) => (
               <LinkCard key={`${page.path}-${link.href}`} link={link} />
@@ -673,12 +713,15 @@ function PricingPage({ page }: { page: PageData }) {
   )
 }
 
-function ResourcesPage({ page }: { page: PageData }) {
+function ResourcesPage({ page, categories }: { page: PageData; categories: typeof resourceCategories }) {
+  const { lang } = useLanguage()
+  const t = ui[lang]
+
   return (
     <>
-      <SectionBlock eyebrow="Categorías" title="Qué vas a encontrar aquí" intro="Guías prácticas para ordenar leads, responder mejor y entender qué sistema te conviene.">
+      <SectionBlock eyebrow={t.eyebrowCategories} title={t.titleResourcesHub} intro={t.introResourcesHub}>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {(page.resourceCategories || resourceCategories).map((category) => (
+          {(page.resourceCategories || categories).map((category) => (
             <article key={category.name} className="rounded-[1.6rem] border border-white/80 bg-white/92 p-6 shadow-soft">
               <p className="font-heading text-xl text-brand-950">{category.name}</p>
               <p className="mt-3 text-sm leading-relaxed text-graphite-700">{category.description}</p>
@@ -687,7 +730,7 @@ function ResourcesPage({ page }: { page: PageData }) {
         </div>
       </SectionBlock>
 
-      <SectionBlock eyebrow="Artículos destacados" title="Contenido útil, pensado para problemas reales" intro="Cada artículo responde una duda concreta y te ayuda a avanzar hacia una solución clara." subdued>
+      <SectionBlock eyebrow={t.eyebrowFeaturedArticles} title={t.titleResourcesArticles} intro={t.introResourcesArticles} subdued>
         <div className="grid gap-5 lg:grid-cols-3">
           {(page.resourcePosts || []).map((post) => (
             <a key={post.path} href={post.path} className="group block rounded-[1.75rem] border border-white/80 bg-white/92 p-6 shadow-soft transition hover:-translate-y-1 hover:border-brand-300 hover:shadow-elevated">
@@ -701,7 +744,7 @@ function ResourcesPage({ page }: { page: PageData }) {
       </SectionBlock>
 
       {page.examplesTitle ? (
-        <SectionBlock eyebrow="Enlazado interno" title={page.examplesTitle} intro={page.examplesIntro || ''}>
+        <SectionBlock eyebrow={t.eyebrowInternalLinks} title={page.examplesTitle} intro={page.examplesIntro || ''}>
           <div className="grid gap-4 lg:grid-cols-3">
             {(page.examples || []).map((item) => (
               <article key={item.title} className="rounded-[1.75rem] border border-white/80 bg-white/92 p-6 shadow-soft">
@@ -717,17 +760,16 @@ function ResourcesPage({ page }: { page: PageData }) {
 }
 
 function ArticlePage({ page }: { page: PageData }) {
+  const { lang } = useLanguage()
+  const t = ui[lang]
+
   return (
     <>
       <div className="section-shell pt-8">
         <nav aria-label="Breadcrumb" className="text-sm text-graphite-600">
-          <a href="/" className="hover:text-brand-900">
-            Inicio
-          </a>
+          <a href="/" className="hover:text-brand-900">{t.breadcrumbHome}</a>
           <span className="mx-2">/</span>
-          <a href="/recursos" className="hover:text-brand-900">
-            Recursos
-          </a>
+          <a href="/recursos" className="hover:text-brand-900">{t.breadcrumbResources}</a>
           <span className="mx-2">/</span>
           <span>{page.label}</span>
         </nav>
@@ -752,24 +794,20 @@ function ArticlePage({ page }: { page: PageData }) {
 
           <aside className="space-y-4">
             <article className="rounded-[1.6rem] border border-white/80 bg-white/92 p-6 shadow-soft">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-700">Categoría</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-700">{t.articleAsideCategory}</p>
               <p className="mt-3 font-heading text-xl text-brand-950">{page.articleCategory}</p>
             </article>
             <article className="rounded-[1.6rem] border border-white/80 bg-white/92 p-6 shadow-soft">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-700">CTA</p>
-              <p className="mt-3 text-sm leading-relaxed text-graphite-700">
-                Si el problema te suena, el siguiente paso no es leer más teoría. Es ver cómo se implementa el sistema.
-              </p>
-              <a href="/como-funciona" className="btn-primary mt-5 w-full">
-                Ver cómo funciona
-              </a>
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-700">{t.articleAsideCta}</p>
+              <p className="mt-3 text-sm leading-relaxed text-graphite-700">{t.articleAsideCtaText}</p>
+              <a href="/como-funciona" className="btn-primary mt-5 w-full">{t.articleAsideCtaButton}</a>
             </article>
           </aside>
         </div>
       </section>
 
       {page.relatedLinks.length > 0 ? (
-        <SectionBlock title="Sigue por aquí" intro="Si este tema te encaja, aquí tienes el siguiente paso más útil.">
+        <SectionBlock title={t.titleKeepReading} intro={t.introArticleRelated}>
           <div className="grid gap-5 lg:grid-cols-3">
             {page.relatedLinks.map((link) => (
               <LinkCard key={`${page.path}-${link.href}`} link={link} />
@@ -782,8 +820,31 @@ function ArticlePage({ page }: { page: PageData }) {
 }
 
 function App() {
+  const { lang } = useLanguage()
+  const t = ui[lang]
+  const isEn = lang === 'en'
+  const [diagnosticModalOpen, setDiagnosticModalOpen] = useState(false)
+
+  const activePagesByPath = isEn ? pagesByPathEn : pagesByPath
+  const activeHome = isEn ? homePageEn : homePage
+  const activeAllPages = isEn ? allPagesEn : allPages
+  const activeNav = isEn ? primaryNavEn : primaryNav
+  const activeNiches = isEn ? nicheLinkEn : nicheLinks
+  const activeResources = isEn ? featuredResourcesEn : featuredResources
+  const activeCategories = isEn ? resourceCategoriesEn : resourceCategories
+  const activeFooterLinks = isEn ? footerLinkGroupsEn : footerLinkGroups
+  const activeWhatsappMessage = isEn ? whatsappShortMessageEn : whatsappShortMessage
+
   const currentPath = normalizePath(window.location.pathname)
-  const currentPage = pagesByPath[currentPath] ?? homePage
+  const currentPage = activePagesByPath[currentPath] ?? activeHome
+
+  function openDiagnosisModal() {
+    setDiagnosticModalOpen(true)
+  }
+
+  function isContactHref(href: string) {
+    return href === '#contacto' || href === '/#contacto'
+  }
 
   useEffect(() => {
     const canonicalUrl = `${siteUrl}${currentPage.path === '/' ? '' : currentPage.path}`
@@ -793,7 +854,7 @@ function App() {
     upsertMetaAttribute('name', 'robots', 'index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1')
     upsertMetaAttribute('name', 'author', brandName)
     upsertMetaAttribute('property', 'og:type', 'website')
-    upsertMetaAttribute('property', 'og:locale', 'es_ES')
+    upsertMetaAttribute('property', 'og:locale', isEn ? 'en_US' : 'es_ES')
     upsertMetaAttribute('property', 'og:site_name', brandName)
     upsertMetaAttribute('property', 'og:title', currentPage.title)
     upsertMetaAttribute('property', 'og:description', currentPage.metaDescription)
@@ -802,13 +863,12 @@ function App() {
     upsertMetaAttribute('name', 'twitter:title', currentPage.title)
     upsertMetaAttribute('name', 'twitter:description', currentPage.metaDescription)
     upsertLink('canonical', canonicalUrl)
-    document.documentElement.lang = 'es'
-  }, [currentPage])
+  }, [currentPage, isEn])
 
   return (
     <div className="relative isolate overflow-x-hidden pb-24 md:pb-0">
       <ApolloInboundLoader />
-      <SeoStructuredData currentPage={currentPage} allPages={allPages} />
+      <SeoStructuredData currentPage={currentPage} allPages={activeAllPages} />
       <div
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[40rem] bg-gradient-to-b from-brand-200/35 via-brand-100/10 to-transparent"
         aria-hidden="true"
@@ -822,13 +882,13 @@ function App() {
         aria-hidden="true"
       />
 
-      <Header currentPage={currentPage} />
+      <Header currentPage={currentPage} nav={activeNav} onOpenDiagnosisModal={openDiagnosisModal} />
       <div aria-hidden="true" className="h-16" />
 
       <div className="border-b border-action-100 bg-gradient-to-r from-action-50 to-brand-50">
         <div className="section-shell flex flex-col gap-2 py-3 text-center text-sm font-medium text-graphite-700 sm:flex-row sm:items-center sm:justify-center sm:gap-5">
-          <span className="pill-urgent">Equipos digitales para captar, responder, organizar y seguir leads</span>
-          <span className="pill-trust">Precios visibles y soluciones adaptadas a tu sector</span>
+          <span className="pill-urgent">{t.pillLeads}</span>
+          <span className="pill-trust">{t.pillPricing}</span>
         </div>
       </div>
 
@@ -843,20 +903,46 @@ function App() {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={currentPage.hero.primaryCtaHref}
-                className="btn-primary"
-                onClick={() => trackEvent('cta_click', { location: 'hero', type: 'primary', page: currentPage.path })}
-              >
-                {currentPage.hero.primaryCtaLabel}
-              </a>
-              <a
-                href={currentPage.hero.secondaryCtaHref}
-                className="btn-secondary"
-                onClick={() => trackEvent('cta_click', { location: 'hero', type: 'secondary', page: currentPage.path })}
-              >
-                {currentPage.hero.secondaryCtaLabel}
-              </a>
+              {isContactHref(currentPage.hero.primaryCtaHref) ? (
+                <button
+                  type="button"
+                  className="btn-primary"
+                  onClick={() => {
+                    trackEvent('cta_click', { location: 'hero', type: 'primary', page: currentPage.path })
+                    openDiagnosisModal()
+                  }}
+                >
+                  {currentPage.hero.primaryCtaLabel}
+                </button>
+              ) : (
+                <a
+                  href={currentPage.hero.primaryCtaHref}
+                  className="btn-primary"
+                  onClick={() => trackEvent('cta_click', { location: 'hero', type: 'primary', page: currentPage.path })}
+                >
+                  {currentPage.hero.primaryCtaLabel}
+                </a>
+              )}
+              {isContactHref(currentPage.hero.secondaryCtaHref) ? (
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={() => {
+                    trackEvent('cta_click', { location: 'hero', type: 'secondary', page: currentPage.path })
+                    openDiagnosisModal()
+                  }}
+                >
+                  {currentPage.hero.secondaryCtaLabel}
+                </button>
+              ) : (
+                <a
+                  href={currentPage.hero.secondaryCtaHref}
+                  className="btn-secondary"
+                  onClick={() => trackEvent('cta_click', { location: 'hero', type: 'secondary', page: currentPage.path })}
+                >
+                  {currentPage.hero.secondaryCtaLabel}
+                </a>
+              )}
             </div>
 
             <ul className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -887,19 +973,19 @@ function App() {
       </header>
 
       <main>
-        {currentPage.kind === 'home' ? <HomePage /> : null}
+        {currentPage.kind === 'home' ? <HomePage page={currentPage} niches={activeNiches} resources={activeResources} /> : null}
         {currentPage.kind === 'service' ? <ServicePage page={currentPage} /> : null}
         {currentPage.kind === 'niche' ? <NichePage page={currentPage} /> : null}
         {currentPage.kind === 'pricing' ? <PricingPage page={currentPage} /> : null}
-        {currentPage.kind === 'resources' ? <ResourcesPage page={currentPage} /> : null}
+        {currentPage.kind === 'resources' ? <ResourcesPage page={currentPage} categories={activeCategories} /> : null}
         {currentPage.kind === 'article' ? <ArticlePage page={currentPage} /> : null}
       </main>
 
       <SectionBlock
         id="faq"
-        eyebrow="FAQ"
-        title="Preguntas frecuentes"
-        intro="Respuestas cortas para resolver objeciones reales y reforzar la decisión comercial."
+        eyebrow={t.eyebrowFaq}
+        title={t.titleFaq}
+        intro={t.introFaq}
         subdued
       >
         <div className="grid gap-4 lg:grid-cols-2">
@@ -912,25 +998,25 @@ function App() {
       <section id={contactSectionId} className="border-t border-white/70 py-16 lg:py-20">
         <div className="section-shell grid gap-8 lg:grid-cols-[1fr_0.9fr]">
           <div>
-            <span className="section-kicker">Diagnóstico</span>
+            <span className="section-kicker">{t.eyebrowDiagnosis}</span>
             <h2 className="max-w-3xl text-3xl leading-tight md:text-4xl">
-              Si tus leads se están perdiendo entre retrasos, desorden y tareas manuales, aquí se arregla.
+              {t.titleDiagnosis}
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-graphite-700 md:text-lg">
-              Revisamos cómo entran hoy tus leads, cómo se responden, cómo se siguen y dónde se está rompiendo el proceso. El objetivo es decirte qué equipo digital necesitas y con qué plan conviene empezar.
+              {t.diagnosisDesc}
             </p>
 
             <div className="mt-8 grid gap-4 md:grid-cols-2">
               <article className="rounded-[1.6rem] border border-white/80 bg-white/90 p-6 shadow-soft">
-                <p className="font-heading text-xl text-brand-950">Qué revisamos</p>
+                <p className="font-heading text-xl text-brand-950">{t.diagnosisCard1Title}</p>
                 <p className="mt-3 text-sm leading-relaxed text-graphite-700">
-                  Entrada de leads, velocidad de respuesta, seguimiento, organización de información y puntos donde hoy se están perdiendo oportunidades.
+                  {t.diagnosisCard1Desc}
                 </p>
               </article>
               <article className="rounded-[1.6rem] border border-white/80 bg-white/90 p-6 shadow-soft">
-                <p className="font-heading text-xl text-brand-950">Qué te llevas</p>
+                <p className="font-heading text-xl text-brand-950">{t.diagnosisCard2Title}</p>
                 <p className="mt-3 text-sm leading-relaxed text-graphite-700">
-                  Un diagnóstico claro, el plan que encaja mejor y una propuesta concreta para implantar el equipo digital sin rodeos.
+                  {t.diagnosisCard2Desc}
                 </p>
               </article>
             </div>
@@ -938,14 +1024,15 @@ function App() {
 
           <div className="grid gap-5">
             <LeadForm />
-            <WhatsAppQuickContact shortMessage={whatsappShortMessage} />
+            <WhatsAppQuickContact shortMessage={activeWhatsappMessage} />
           </div>
         </div>
       </section>
 
-      <Footer brand={brandName} linkGroups={footerLinkGroups} />
-      <MobileStickyCta />
+      <Footer brand={brandName} linkGroups={activeFooterLinks} />
+      <MobileStickyCta onOpenDiagnosisModal={openDiagnosisModal} />
       <MeetingBar />
+      <DiagramFormModal open={diagnosticModalOpen} onClose={() => setDiagnosticModalOpen(false)} />
     </div>
   )
 }

@@ -1,3 +1,5 @@
+import { useLanguage } from '../i18n/LanguageContext'
+import { ui } from '../i18n/ui'
 import { trackEvent } from '../lib/analytics'
 import { meetingUrl } from '../data/content'
 
@@ -11,7 +13,10 @@ function CalendarIcon() {
   )
 }
 
-export function MobileStickyCta() {
+export function MobileStickyCta({ onOpenDiagnosisModal }: { onOpenDiagnosisModal: () => void }) {
+  const { lang } = useLanguage()
+  const t = ui[lang]
+
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 border-t border-graphite-200 bg-white/96 px-4 py-3 backdrop-blur md:hidden">
       <div className="flex items-center gap-2">
@@ -23,15 +28,18 @@ export function MobileStickyCta() {
           className="flex flex-shrink-0 items-center gap-1.5 rounded-xl border border-brand-200 bg-white px-3 py-2.5 text-xs font-semibold text-brand-900"
         >
           <CalendarIcon />
-          15 min
+          {t.meeting15min}
         </a>
-        <a
-          href="#contacto"
+        <button
+          type="button"
           className="btn-primary flex-1 text-center"
-          onClick={() => trackEvent('cta_click', { location: 'mobile_sticky_bar', type: 'primary' })}
+          onClick={() => {
+            trackEvent('cta_click', { location: 'mobile_sticky_bar', type: 'primary' })
+            onOpenDiagnosisModal()
+          }}
         >
-          Solicitar diagnóstico
-        </a>
+          {t.mobileStickyDiagnosis}
+        </button>
       </div>
     </div>
   )
