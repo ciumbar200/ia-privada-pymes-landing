@@ -1,6 +1,6 @@
 // pa11y-runner.ts — runs pa11y as second opinion
 
-import { chromium } from 'playwright';
+// import { chromium } from 'playwright';  // removed - pa11y launches its own browser
 import type { Issue, Severity, IssueType, Pa11yResult, Pa11yIssue } from './types.js';
 import { axeTranslations } from './translations.js';
 
@@ -70,24 +70,20 @@ function pa11yIssuesToIssues(pa11yIssues: Pa11yIssue[]): Issue[] {
 }
 
 export async function runPa11y(url: string): Promise<Issue[]> {
-  // Launch Pa11y using playwright browser. Pa11y supports passing playwright browser.
-  const browser = await chromium.launch({ headless: true });
+  // Let pa11y launch its own browser to avoid Playwright version conflicts
+  const pa11yModule = await import('pa11y');
+  const pa11yFn = (pa11yModule as unknown as { default: typeof import('pa11y') }).default ?? pa11yModule;
 
-  try {
-    const pa11yModule = await import('pa11y');
-    const pa11yDefault = (pa11yModule as unknown as { default: typeof import('pa11y') }).default ?? pa11yModule;
+  const options: Record<string, unknown> = {
+    standard: 'WCAG2AA',
+    timeout: 30000,
+    wait: 2000,
+    chromeLaunchConfig: {
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    },
+  };
 
-    const options: Record<string, unknown> = {
-      browser,
-      standard: 'WCAG2AA',
-      timeout: 30000,
-      wait: 2000,
-    };
+  const result = await (pa11yFn as unknown as (url: string, opts?: Record<string, unknown>) => Promise<Pa11yResult>)(url, options);
 
-    const result = await (pa11yDefault as unknown as (url: string, opts?: Record<string, unknown>) => Promise<Pa11yResult>)(url, options);
-
-    return pa11yIssuesToIssues(result.issues ?? []);
-  } finally {
-    await browser.close();
-  }
+  return pa11yIssuesToIssues(result.issues ?? []);
 }

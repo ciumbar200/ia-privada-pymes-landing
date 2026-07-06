@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+audit/results/
+audit/screenshots/
+audit/node_modules/
