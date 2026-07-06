@@ -74,9 +74,9 @@ export async function runAxe(url: string): Promise<Issue[]> {
   try {
     await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
 
-    const results: AxeResults = await new AxeBuilder({ page })
+    const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-      .analyze();
+      .analyze() as unknown as AxeResults;
 
     return violationsToIssues(results.violations);
   } finally {

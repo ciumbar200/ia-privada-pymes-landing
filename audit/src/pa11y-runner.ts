@@ -2,7 +2,7 @@
 
 import { chromium } from 'playwright';
 import type { Issue, Severity, IssueType, Pa11yResult, Pa11yIssue } from './types.js';
-import { axeTranslations, defaultTranslation } from './translations.js';
+import { axeTranslations } from './translations.js';
 
 // Map pa11y issue codes to our severity
 function mapPa11ySeverity(code: string): Severity {

@@ -28,7 +28,7 @@ export async function runLighthouse(url: string): Promise<Scores> {
 
     // lighthouse returns { lhr } in newer versions
     const runnerResult = await lighthouse(url, options);
-    const lhr = (runnerResult as { lhr?: Record<string, unknown> })?.lhr ?? runnerResult as Record<string, unknown>;
+    const lhr = (runnerResult as unknown as { lhr?: Record<string, unknown> })?.lhr ?? runnerResult as unknown as Record<string, unknown>;
 
     const categories = (lhr?.categories ?? {}) as Record<string, { score: number | null }>;
 

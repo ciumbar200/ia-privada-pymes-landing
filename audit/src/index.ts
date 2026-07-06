@@ -1,7 +1,7 @@
 // index.ts — main entry, parses URL arg, orchestrates all tools
 
-import { writeFileSync, mkdirSync, resolve as resolvePath } from 'fs';
-import { resolve } from 'path';
+import { writeFileSync, mkdirSync } from 'fs';
+import { resolve, join } from 'path';
 import { runAxe } from './axe-runner.js';
 import { runLighthouse } from './lighthouse-runner.js';
 import { runPa11y } from './pa11y-runner.js';
@@ -99,7 +99,7 @@ async function main(): Promise<void> {
   const resultsDir = resolve(process.cwd(), 'results');
   try {
     mkdirSync(resultsDir, { recursive: true });
-    const resultsPath = resolvePath(resultsDir, `${hash}.json`);
+    const resultsPath = join(resultsDir, `${hash}.json`);
     writeFileSync(resultsPath, JSON.stringify(report, null, 2), 'utf-8');
     console.error(`[audit] Resultados guardados en: ${resultsPath}`);
   } catch (err) {
