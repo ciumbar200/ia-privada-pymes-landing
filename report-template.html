@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe de Auditoría de Accesibilidad — {{company}}</title>
+<style>
+  :root {
+    --brand-950: #0f1d2e;
+    --brand-900: #1a2c40;
+    --brand-800: #243a55;
+    --brand-700: #2c4867;
+    --brand-500: #4a749e;
+    --brand-300: #9bb8d1;
+    --brand-200: #c7d6e6;
+    --brand-100: #e2eaf2;
+    --accent-500: #ef4444;
+    --accent-400: #f97066;
+    --electric-500: #6366f1;
+    --electric-400: #818cf8;
+    --electric-300: #a5b4fc;
+    --success-500: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+  .cover { background: linear-gradient(135deg, var(--brand-950), var(--brand-800)); color: white; padding: 60px 40px; text-align: center; }
+  .cover h1 { font-size: 2.5rem; margin-top: 20px; font-weight: 700; }
+  .cover .subtitle { font-size: 1.1rem; color: var(--brand-300); margin-top: 12px; }
+  .cover .meta { margin-top: 30px; font-size: 0.9rem; color: var(--brand-200); }
+  .cover .logo { font-size: 1.3rem; font-weight: 600; color: var(--electric-300); }
+  .section { max-width: 900px; margin: 40px auto; padding: 0 24px; }
+  .section h2 { font-size: 1.8rem; color: var(--brand-900); margin-bottom: 16px; border-bottom: 2px solid var(--electric-400); padding-bottom: 8px; }
+  .section h3 { font-size: 1.2rem; color: var(--brand-800); margin-top: 20px; margin-bottom: 8px; }
+  .section p { color: #475569; margin-bottom: 12px; }
+  .scores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px; }
+  .score-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; text-align: center; }
+  .score-card .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; }
+  .score-card .value { font-size: 2.5rem; font-weight: 700; margin-top: 8px; }
+  .score-good { color: var(--success-500); }
+  .score-mid { color: var(--warning); }
+  .score-bad { color: var(--danger); }
+  .risk-badge { display: inline-block; padding: 6px 16px; border-radius: 999px; font-weight: 600; font-size: 0.9rem; margin-top: 12px; }
+  .risk-low { background: #dcfce7; color: #15803d; }
+  .risk-medium { background: #fef3c7; color: #b45309; }
+  .risk-high { background: #fee2e2; color: #b42318; }
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
+  .summary-card { border-radius: 10px; padding: 16px; text-align: center; }
+  .summary-card .count { font-size: 2rem; font-weight: 700; }
+  .summary-card .label { font-size: 0.8rem; color: #64748b; }
+  .summary-critical { background: #fee2e2; }
+  .summary-critical .count { color: var(--danger); }
+  .summary-serious { background: #fef3c7; }
+  .summary-serious .count { color: var(--warning); }
+  .summary-moderate { background: #fef9c3; }
+  .summary-moderate .count { color: #ca8a04; }
+  .summary-minor { background: #f1f5f9; }
+  .summary-minor .count { color: #64748b; }
+  .issue { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+  .issue-header { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .severity-badge { padding: 4px 12px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .severity-critical { background: #fee2e2; color: var(--danger); }
+  .severity-serious { background: #fef3c7; color: var(--warning); }
+  .severity-moderate { background: #fef9c3; color: #ca8a04; }
+  .severity-minor { background: #f1f5f9; color: #64748b; }
+  .type-badge { padding: 4px 12px; border-radius: 999px; font-size: 0.75rem; background: #e0e7ff; color: var(--electric-500); }
+  .issue h3 { margin-top: 12px; }
+  .issue .selector { font-family: 'Courier New', monospace; font-size: 0.85rem; color: var(--electric-500); background: #f0f4ff; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-top: 8px; }
+  .recommendation { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px 16px; margin-top: 12px; }
+  .recommendation .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #15803d; font-weight: 600; }
+  .recommendation p { color: #166534; margin-top: 4px; }
+  .screenshot-placeholder { background: #f1f5f9; border: 2px dashed #cbd5e1; border-radius: 8px; padding: 40px; text-align: center; color: #94a3b8; margin: 16px 0; }
+  .disclaimer { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 12px; padding: 20px; margin-top: 30px; }
+  .disclaimer .label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: #c2410c; font-weight: 600; }
+  .cta-box { background: linear-gradient(135deg, var(--brand-950), var(--brand-800)); border-radius: 12px; padding: 30px; text-align: center; margin-top: 30px; color: white; }
+  .cta-box h3 { color: white; font-size: 1.4rem; }
+  .cta-box p { color: var(--brand-300); margin-top: 8px; }
+  .cta-box .btn { display: inline-block; margin-top: 16px; padding: 12px 28px; background: var(--accent-500); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; }
+  .priority-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  .priority-table th, .priority-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+  .priority-table th { background: #f8fafc; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; }
+  .priority-number { font-weight: 700; color: var(--electric-500); }
+  @media print { body { background: white; } .section { max-width: 100%; margin: 20px 0; padding: 0 20px; } }
+  @media (max-width: 640px) { .scores-grid, .summary-grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+
+<!-- 1. Portada -->
+<div class="cover">
+  <div class="logo">Noxo IA Empresas</div>
+  <h1>Informe de Auditoría de Accesibilidad Web</h1>
+  <p class="subtitle">{{company}}</p>
+  <div class="meta">
+    <p>URL analizada: {{url}}</p>
+    <p>Fecha: {{checkedAt}}</p>
+    <p>Informe generado por Noxo IA Empresas</p>
+  </div>
+</div>
+
+<!-- 2. Resumen ejecutivo -->
+<div class="section">
+  <h2>Resumen ejecutivo</h2>
+  <p>{{executiveSummary}}</p>
+
+  <div class="risk-badge {{riskClass}}">Nivel de riesgo: {{riskLevel}}</div>
+
+  <!-- 3. Score general -->
+  <div class="scores-grid">
+    <div class="score-card">
+      <p class="label">Accesibilidad</p>
+      <p class="value {{scoreClass accessibility}}">{{scores.accessibility}}</p>
+    </div>
+    <div class="score-card">
+      <p class="label">Performance</p>
+      <p class="value {{scoreClass performance}}">{{scores.performance}}</p>
+    </div>
+    <div class="score-card">
+      <p class="label">SEO</p>
+      <p class="value {{scoreClass seo}}">{{scores.seo}}</p>
+    </div>
+    <div class="score-card">
+      <p class="label">Best Practices</p>
+      <p class="value {{scoreClass bestPractices}}">{{scores.bestPractices}}</p>
+    </div>
+  </div>
+
+  <div class="summary-grid">
+    <div class="summary-card summary-critical"><p class="count">{{summary.critical}}</p><p class="label">Críticos</p></div>
+    <div class="summary-card summary-serious"><p class="count">{{summary.serious}}</p><p class="label">Serios</p></div>
+    <div class="summary-card summary-moderate"><p class="count">{{summary.moderate}}</p><p class="label">Moderados</p></div>
+    <div class="summary-card summary-minor"><p class="count">{{summary.minor}}</p><p class="label">Menores</p></div>
+  </div>
+</div>
+
+<!-- 5. Top 10 prioridades -->
+<div class="section">
+  <h2>Top 10 prioridades</h2>
+  <table class="priority-table">
+    <thead>
+      <tr><th>#</th><th>Problema</th><th>Severidad</th><th>Impacto</th></tr>
+    </thead>
+    <tbody>
+      {{#each topIssues}}
+      <tr>
+        <td class="priority-number">{{@index}}</td>
+        <td>{{this.title}}</td>
+        <td><span class="severity-badge severity-{{this.severity}}">{{this.severity}}</span></td>
+        <td>{{this.impact}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+<!-- 4. Tabla de errores detallados -->
+<div class="section">
+  <h2>Problemas detectados</h2>
+  {{#each issues}}
+  <div class="issue">
+    <div class="issue-header">
+      <span class="severity-badge severity-{{this.severity}}">{{this.severity}}</span>
+      <span class="type-badge">{{this.type}}</span>
+    </div>
+    <h3>{{this.title}}</h3>
+    <p>{{this.description}}</p>
+    <p>Selector: <span class="selector">{{this.selector}}</span></p>
+    <p><strong>Impacto:</strong> {{this.impact}}</p>
+    <div class="recommendation">
+      <p class="label">Recomendación</p>
+      <p>{{this.recommendation}}</p>
+    </div>
+    <div class="screenshot-placeholder">Captura de pantalla del problema</div>
+  </div>
+  {{/each}}
+</div>
+
+<!-- 6. Capturas -->
+<div class="section">
+  <h2>Capturas de pantalla</h2>
+  <div class="screenshot-placeholder">Captura desktop (1280x720)</div>
+  <div class="screenshot-placeholder">Captura móvil (375x667)</div>
+</div>
+
+<!-- 7. Recomendaciones -->
+<div class="section">
+  <h2>Recomendaciones generales</h2>
+  <ol>
+    <li>Corregir primero los problemas críticos que afectan a reservas, compras o formularios.</li>
+    <li>Revisar el contraste de colores en botones principales y textos importantes.</li>
+    <li>Asegurar que todos los formularios tienen etiquetas <code>&lt;label&gt;</code> asociadas.</li>
+    <li>Implementar navegación por teclado en menús y elementos interactivos.</li>
+    <li>Añadir texto alternativo a imágenes informativas.</li>
+    <li>Reestructurar encabezados siguiendo orden jerárquico correcto.</li>
+    <li>Aumentar tamaño mínimo de botones en móvil a 44x44px.</li>
+    <li>Reemplazar divs con role="button" por elementos nativos.</li>
+  </ol>
+</div>
+
+<!-- 8. Limitaciones del análisis -->
+<div class="section">
+  <div class="disclaimer">
+    <p class="label">Limitaciones del análisis</p>
+    <p>Este informe combina análisis automatizado y explicación asistida por IA. No sustituye una auditoría legal completa ni pruebas manuales exhaustivas, pero ayuda a detectar y priorizar problemas frecuentes de accesibilidad web.</p>
+  </div>
+</div>
+
+<!-- 9. Propuesta de mantenimiento -->
+<div class="section">
+  <h2>Mantenimiento mensual</h2>
+  <p>Las webs cambian con el tiempo. Nuevos contenidos, actualizaciones y plugins pueden introducir errores de accesibilidad sin que te des cuenta.</p>
+  <p>Con el <strong>Mantenimiento Noxo</strong> (49€/mes) realizamos:</p>
+  <ul style="margin-left: 20px; margin-top: 12px; color: #475569;">
+    <li>Reescaneo mensual completo de tu web</li>
+    <li>Informe actualizado con nuevos hallazgos</li>
+    <li>Alertas si aparecen errores nuevos</li>
+    <li>Revisión básica de cambios</li>
+    <li>Recomendaciones continuas</li>
+    <li>Soporte ligero por email</li>
+  </ul>
+</div>
+
+<!-- 10. CTA final -->
+<div class="section">
+  <div class="cta-box">
+    <h3>¿Listo para mejorar tu web?</h3>
+    <p>Solicita tu auditoría express o contrata el mantenimiento mensual.</p>
+    <a href="https://noxoiaempresas.com/contacto" class="btn">Solicitar auditoría</a>
+  </div>
+</div>
+
+</body>
+</html>

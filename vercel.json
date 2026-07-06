@@ -1,11 +1,9 @@
 {
-  "routes": [
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+  "rewrites": [
+    { "source": "/api/lead", "destination": "/api/lead" },
+    { "source": "/api/submit", "destination": "/api/lead" },
+    { "source": "/demo-auditoria", "destination": "/" },
+    { "source": "/precios", "destination": "/" },
+    { "source": "/contacto", "destination": "/" }
   ]
 }

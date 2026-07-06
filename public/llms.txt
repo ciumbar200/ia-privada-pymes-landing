@@ -1,23 +1,21 @@
 # Noxo IA Empresas
 
-> Equipos digitales para captar, responder, organizar y seguir leads sin desorden, retrasos ni trabajo manual innecesario.
+> Auditorías de accesibilidad web para empresas que venden online.
 
-## Verticales principales
-- Coliving y flex living
-- Inmobiliarias y property managers
-- Clínicas, centros estéticos y salud privada
-- Academias y formación
+Noxo IA Empresas ayuda a negocios con web, ecommerce, reservas o formularios a detectar barreras de accesibilidad, mejorar conversión y reducir riesgo digital mediante auditorías claras, informes accionables y mantenimiento mensual.
 
-## Servicios principales
-- Cómo funciona el equipo digital
-- Planes y precios visibles
-- Recursos sobre leads, seguimiento y organización comercial
+## Servicios
 
-## Propuesta
-- Marca madre orientada a leads y proceso comercial
-- Oferta entendible por cualquier dueño de negocio
-- Sistema operativo comercial con equipos digitales
+- **Auditoría Express** (149€): Escaneo técnico, informe PDF, top 10 prioridades, capturas, recomendaciones. Entrega 48h.
+- **Mantenimiento Noxo** (49€/mes): Reescaneo mensual, alertas, informe actualizado, soporte email.
+
+## Stack técnico
+
+- axe-core, Lighthouse, Pa11y, Playwright
+- React 19, Vite, Tailwind CSS
+- Node.js CLI para auditorías automatizadas
 
 ## Contacto
-- Landing principal: https://noxoiaempresas.com/
-- CTA principal: Solicitar diagnóstico comercial.
+
+- Web: https://noxoiaempresas.com
+- Email: hola@noxoiaempresas.com
