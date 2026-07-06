@@ -60,7 +60,7 @@ export function DigitalTeamDiagram({
   }
 
   return (
-    <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-white/70 shadow-elevated backdrop-blur-sm">
+    <div className="overflow-hidden rounded-[2rem] border bg-brand-900/40 shadow-elevated backdrop-blur-sm">
       {/* Header */}
       <div className="px-6 py-7 md:px-8 md:py-8">
         <span className="section-kicker">Equipo digital en acción</span>
@@ -69,10 +69,10 @@ export function DigitalTeamDiagram({
       </div>
 
       {/* Body */}
-      <div className="border-t border-white/60 lg:grid lg:grid-cols-[3fr_2fr]">
+      <div className="border-t border-brand-800/60 lg:grid lg:grid-cols-[3fr_2fr]">
 
         {/* ── Left: diagram ─────────────────────────────────────────── */}
-        <div className="border-b border-white/60 p-4 lg:border-b-0 lg:border-r lg:p-6">
+        <div className="border-b border-brand-800/60 p-4 lg:border-b-0 lg:border-r lg:p-6">
 
           {/* Desktop hub-and-spoke */}
           <div
@@ -91,7 +91,7 @@ export function DigitalTeamDiagram({
                 cx={CX} cy={CY}
                 rx={184} ry={140}
                 fill="none"
-                stroke="#e9f0f9"
+                stroke="#243a55"
                 strokeWidth="1"
                 strokeDasharray="5 8"
               />
@@ -175,11 +175,11 @@ export function DigitalTeamDiagram({
                   className={`absolute z-10 rounded-[1.3rem] p-2.5 text-center transition-all duration-200 ${
                     on
                       ? 'bg-brand-950'
-                      : 'border border-white/80 bg-white/92 shadow-soft hover:-translate-y-0.5 hover:shadow-elevated'
+                      : 'border border-brand-700/50 bg-brand-900/40 shadow-soft hover:-translate-y-0.5 hover:shadow-elevated'
                   }`}
                   aria-pressed={on}
                 >
-                  <span className={`block text-[0.54rem] font-semibold uppercase tracking-[0.09em] ${on ? 'text-action-300' : 'text-brand-600'}`}>
+                  <span className={`block text-[0.54rem] font-semibold uppercase tracking-[0.09em] ${on ? 'text-action-300' : 'text-electric-400'}`}>
                     {r.tag}
                   </span>
                   <p className={`mt-1 text-[0.64rem] font-semibold leading-snug ${on ? 'text-white' : 'text-brand-950'}`}>
@@ -190,14 +190,14 @@ export function DigitalTeamDiagram({
             })}
 
             {/* Interaction hint */}
-            <p className="absolute bottom-1 left-0 right-0 text-center text-[0.6rem] text-graphite-400">
+            <p className="absolute bottom-1 left-0 right-0 text-center text-[0.6rem] text-brand-500">
               Haz clic en un rol para ver el detalle
             </p>
           </div>
 
           {/* Mobile: wrapped pills */}
           <div className="lg:hidden">
-            <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-brand-600">
+            <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-electric-400">
               Selecciona un rol
             </p>
             <div className="flex flex-wrap gap-2">
@@ -207,7 +207,7 @@ export function DigitalTeamDiagram({
                 className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
                   active === -1
                     ? 'bg-brand-950 text-white'
-                    : 'border border-brand-200 bg-white text-brand-800 hover:bg-brand-50'
+                    : 'border border-brand-200 bg-white text-brand-200 hover:bg-brand-800/50'
                 }`}
               >
                 {diagram.centralRole.tag} · {diagram.centralRole.title}
@@ -220,7 +220,7 @@ export function DigitalTeamDiagram({
                   className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
                     active === i
                       ? 'bg-brand-950 text-white'
-                      : 'border border-brand-200 bg-white text-brand-800 hover:bg-brand-50'
+                      : 'border border-brand-200 bg-white text-brand-200 hover:bg-brand-800/50'
                   }`}
                 >
                   {r.tag} · {r.title}

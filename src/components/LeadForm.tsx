@@ -82,7 +82,7 @@ export function LeadForm() {
 
     if (result.status === 'sent') {
       setStatus('sent')
-      setFeedback('Solicitud enviada. Te contactaremos para revisar tu caso.')
+      setFeedback('Solicitud enviada. Te contactaremos en 24h para tu auditoría IA gratuita.')
       trackEvent('lead_form_submit_success')
       setFormData(initialFormData)
       return
@@ -108,14 +108,14 @@ export function LeadForm() {
   }
 
   return (
-    <form className="surface-card p-6 lg:p-8" onSubmit={handleSubmit} noValidate>
-      <h3 className="text-2xl font-semibold">Solicitar diagnóstico comercial</h3>
-      <p className="mt-2 text-sm text-graphite-700">
-        Déjanos tus datos y te contactamos para revisar captación, seguimiento y cierre de leads.
+    <form className="glass-card p-6 lg:p-8" onSubmit={handleSubmit} noValidate>
+      <h3 className="text-2xl font-semibold text-white">Solicitar auditoría IA gratuita</h3>
+      <p className="mt-2 text-sm text-brand-300">
+        Déjanos tus datos y te contactamos en 24h para tu auditoría IA gratuita. Sin compromiso.
       </p>
 
       <div className="mt-6 grid gap-4">
-        <label className="text-sm font-medium text-brand-900" htmlFor="nombre">
+        <label className="text-sm font-medium text-brand-100" htmlFor="nombre">
           Nombre
           <input
             id="nombre"
@@ -123,13 +123,13 @@ export function LeadForm() {
             type="text"
             value={formData.name}
             onChange={(event) => updateField('name', event.target.value)}
-            className="mt-2 w-full rounded-xl border border-graphite-300 bg-white px-3 py-2 text-sm text-brand-950 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+            className="mt-2 w-full rounded-xl border border-brand-700 bg-brand-900/60 px-3 py-2 text-sm text-white outline-none transition focus:border-electric-400 focus:ring-2 focus:ring-electric-500/30"
             autoComplete="name"
           />
-          {errors.name ? <span className="mt-1 block text-xs text-red-700">{errors.name}</span> : null}
+          {errors.name ? <span className="mt-1 block text-xs text-accent-400">{errors.name}</span> : null}
         </label>
 
-        <label className="text-sm font-medium text-brand-900" htmlFor="empresa">
+        <label className="text-sm font-medium text-brand-100" htmlFor="empresa">
           Empresa
           <input
             id="empresa"
@@ -137,13 +137,13 @@ export function LeadForm() {
             type="text"
             value={formData.company}
             onChange={(event) => updateField('company', event.target.value)}
-            className="mt-2 w-full rounded-xl border border-graphite-300 bg-white px-3 py-2 text-sm text-brand-950 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+            className="mt-2 w-full rounded-xl border border-brand-700 bg-brand-900/60 px-3 py-2 text-sm text-white outline-none transition focus:border-electric-400 focus:ring-2 focus:ring-electric-500/30"
             autoComplete="organization"
           />
-          {errors.company ? <span className="mt-1 block text-xs text-red-700">{errors.company}</span> : null}
+          {errors.company ? <span className="mt-1 block text-xs text-accent-400">{errors.company}</span> : null}
         </label>
 
-        <label className="text-sm font-medium text-brand-900" htmlFor="email">
+        <label className="text-sm font-medium text-brand-100" htmlFor="email">
           Email
           <input
             id="email"
@@ -151,13 +151,13 @@ export function LeadForm() {
             type="email"
             value={formData.email}
             onChange={(event) => updateField('email', event.target.value)}
-            className="mt-2 w-full rounded-xl border border-graphite-300 bg-white px-3 py-2 text-sm text-brand-950 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+            className="mt-2 w-full rounded-xl border border-brand-700 bg-brand-900/60 px-3 py-2 text-sm text-white outline-none transition focus:border-electric-400 focus:ring-2 focus:ring-electric-500/30"
             autoComplete="email"
           />
-          {errors.email ? <span className="mt-1 block text-xs text-red-700">{errors.email}</span> : null}
+          {errors.email ? <span className="mt-1 block text-xs text-accent-400">{errors.email}</span> : null}
         </label>
 
-        <label className="text-sm font-medium text-brand-900" htmlFor="telefono">
+        <label className="text-sm font-medium text-brand-100" htmlFor="telefono">
           Teléfono
           <input
             id="telefono"
@@ -165,45 +165,45 @@ export function LeadForm() {
             type="tel"
             value={formData.phone}
             onChange={(event) => updateField('phone', event.target.value)}
-            className="mt-2 w-full rounded-xl border border-graphite-300 bg-white px-3 py-2 text-sm text-brand-950 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+            className="mt-2 w-full rounded-xl border border-brand-700 bg-brand-900/60 px-3 py-2 text-sm text-white outline-none transition focus:border-electric-400 focus:ring-2 focus:ring-electric-500/30"
             autoComplete="tel"
           />
-          {errors.phone ? <span className="mt-1 block text-xs text-red-700">{errors.phone}</span> : null}
+          {errors.phone ? <span className="mt-1 block text-xs text-accent-400">{errors.phone}</span> : null}
         </label>
 
-        <label className="text-sm font-medium text-brand-900" htmlFor="sector">
+        <label className="text-sm font-medium text-brand-100" htmlFor="sector">
           Sector
           <select
             id="sector"
             name="sector"
             value={formData.sector}
             onChange={(event) => updateField('sector', event.target.value as LeadSector)}
-            className="mt-2 w-full rounded-xl border border-graphite-300 bg-white px-3 py-2 text-sm text-brand-950 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+            className="mt-2 w-full rounded-xl border border-brand-700 bg-brand-900/60 px-3 py-2 text-sm text-white outline-none transition focus:border-electric-400 focus:ring-2 focus:ring-electric-500/30"
           >
             {sectorOptions.map((option) => (
-              <option key={option.value} value={option.value}>
+              <option key={option.value} value={option.value} className="bg-brand-900">
                 {option.label}
               </option>
             ))}
           </select>
-          {errors.sector ? <span className="mt-1 block text-xs text-red-700">{errors.sector}</span> : null}
+          {errors.sector ? <span className="mt-1 block text-xs text-accent-400">{errors.sector}</span> : null}
         </label>
       </div>
 
       <button type="submit" className="btn-primary mt-6 w-full" disabled={status === 'sending'}>
-        {status === 'sending' ? 'Enviando...' : 'Solicitar diagnóstico comercial'}
+        {status === 'sending' ? 'Enviando...' : 'Solicitar auditoría gratuita'}
       </button>
 
-      <p className="mt-3 text-xs text-graphite-600">
-        Al enviar, aceptas que te contactemos para revisar tu caso y proponerte un siguiente paso.
+      <p className="mt-3 text-xs text-brand-400">
+        Al enviar, aceptas que te contactemos para tu auditoría IA gratuita. Sin compromiso.
       </p>
 
       {feedback ? (
         <p
           className={`mt-4 rounded-xl border px-4 py-3 text-sm ${
             status === 'error'
-              ? 'border-red-200 bg-red-50 text-red-800'
-              : 'border-brand-200 bg-brand-100/60 text-brand-800'
+              ? 'border-accent-500/30 bg-accent-500/10 text-accent-300'
+              : 'border-success-200/30 bg-success-100/10 text-success-200'
           }`}
           role="status"
         >

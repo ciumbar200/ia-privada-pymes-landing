@@ -18,14 +18,14 @@ export function MobileStickyCta({ onOpenDiagnosisModal }: { onOpenDiagnosisModal
   const t = ui[lang]
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-graphite-200 bg-white/96 px-4 py-3 backdrop-blur md:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-brand-800 bg-brand-950/96 px-4 py-3 backdrop-blur md:hidden">
       <div className="flex items-center gap-2">
         <a
           href={meetingUrl}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackEvent('meeting_link_click', { location: 'mobile_sticky_bar' })}
-          className="flex flex-shrink-0 items-center gap-1.5 rounded-xl border border-brand-200 bg-white px-3 py-2.5 text-xs font-semibold text-brand-900"
+          className="flex flex-shrink-0 items-center gap-1.5 rounded-xl border border-brand-700 bg-brand-800/50 px-3 py-2.5 text-xs font-semibold text-brand-100"
         >
           <CalendarIcon />
           {t.meeting15min}

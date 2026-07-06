@@ -14,14 +14,14 @@ export function WhatsAppQuickContact({ shortMessage }: WhatsAppQuickContactProps
   const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(shortMessage)}`
 
   return (
-    <aside className="surface-card h-full p-6 lg:p-8">
+    <aside className="glass-card h-full p-6 lg:p-8">
       <span className="section-kicker">Contacto rápido</span>
-      <h3 className="text-2xl font-semibold">Versión corta para WhatsApp</h3>
-      <p className="mt-3 text-sm leading-relaxed text-graphite-700">
-        Si prefieres un primer contacto directo, usa este mensaje breve y te respondemos para agendar el diagnóstico.
+      <h3 className="text-2xl font-semibold text-white">¿Prefieres WhatsApp?</h3>
+      <p className="mt-3 text-sm leading-relaxed text-brand-300">
+        Si prefieres un primer contacto directo, usa este mensaje y te respondemos para agendar tu auditoría.
       </p>
 
-      <div className="mt-4 rounded-xl border border-brand-200 bg-brand-100/50 p-4 text-sm leading-relaxed text-brand-900">
+      <div className="mt-4 rounded-xl border border-brand-700 bg-brand-900/50 p-4 text-sm leading-relaxed text-brand-100">
         {shortMessage}
       </div>
 

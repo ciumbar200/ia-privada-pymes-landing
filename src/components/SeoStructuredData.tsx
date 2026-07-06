@@ -39,9 +39,9 @@ export function SeoStructuredData({ currentPage, allPages }: SeoStructuredDataPr
       url: siteUrl,
       areaServed: 'ES',
       knowsAbout: [
-        'equipos digitales',
-        'gestión de leads',
-        'seguimiento comercial',
+        'auditoría IA',
+        'implementación IA empresas',
+        'automatización con IA',
         'coliving',
         'property managers',
         'clínicas',
@@ -97,14 +97,14 @@ export function SeoStructuredData({ currentPage, allPages }: SeoStructuredDataPr
         areaServed: 'ES',
         audience: {
           '@type': 'Audience',
-          audienceType: 'Empresas con leads, trabajo manual y necesidad de más orden comercial',
+          audienceType: 'Empresas que quieren implementar IA pero no saben por dónde empezar',
         },
         description: currentPage.metaDescription,
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'EUR',
-          name: 'Diagnóstico comercial',
+          name: 'Auditoría IA gratuita',
         },
       },
     )
@@ -125,14 +125,14 @@ export function SeoStructuredData({ currentPage, allPages }: SeoStructuredDataPr
       {
         '@context': 'https://schema.org',
         '@type': 'OfferCatalog',
-        name: 'Planes de equipos digitales',
+        name: 'Modalidades de proyecto IA',
         itemListElement: (currentPage.pricingPlans || []).map((plan, index) => ({
           '@type': 'Offer',
           position: index + 1,
           name: plan.name,
           description: plan.summary,
           priceCurrency: 'EUR',
-          category: 'Equipo digital',
+          category: 'Proyecto IA',
         })),
       },
     )
@@ -153,7 +153,7 @@ export function SeoStructuredData({ currentPage, allPages }: SeoStructuredDataPr
       {
         '@context': 'https://schema.org',
         '@type': 'Blog',
-        name: 'Recursos Noxo IA Empresas',
+        name: 'Recursos Noxo IA',
         url: canonicalUrl,
         blogPost: (currentPage.resourcePosts || []).map((post) => ({
           '@type': 'BlogPosting',

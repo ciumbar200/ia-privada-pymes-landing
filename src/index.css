@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -15,31 +15,29 @@
   }
 
   body {
-    @apply m-0 bg-brand-50 font-sans text-brand-900 antialiased;
+    @apply m-0 bg-brand-950 font-sans text-brand-100 antialiased;
     background-image:
-      radial-gradient(circle at 10% -2%, rgba(59, 130, 246, 0.17), transparent 33%),
-      radial-gradient(circle at 92% 0%, rgba(20, 184, 166, 0.09), transparent 30%),
-      radial-gradient(circle at 50% 100%, rgba(249, 115, 22, 0.07), transparent 38%),
-      linear-gradient(180deg, #f7faff 0%, #f4f8ff 46%, #f5f8fc 100%);
+      radial-gradient(circle at 15% -5%, rgba(99, 102, 241, 0.15), transparent 40%),
+      radial-gradient(circle at 85% 0%, rgba(239, 68, 68, 0.08), transparent 35%),
+      radial-gradient(circle at 50% 100%, rgba(54, 90, 130, 0.12), transparent 45%),
+      linear-gradient(180deg, #0f1d2e 0%, #1a2c40 40%, #0f1d2e 100%);
+    background-attachment: fixed;
   }
 
-  h1,
-  h2,
-  h3,
-  h4 {
-    @apply font-heading tracking-tight text-brand-950;
+  h1, h2, h3, h4 {
+    @apply font-heading tracking-tight text-white;
   }
 
   p {
-    @apply text-graphite-700;
+    @apply text-brand-200;
   }
 
   * {
-    @apply border-graphite-200;
+    @apply border-brand-800;
   }
 
   ::selection {
-    @apply bg-brand-200 text-brand-950;
+    @apply bg-electric-500 text-white;
   }
 
   [id] {
@@ -53,35 +51,51 @@
   }
 
   .surface-card {
-    @apply rounded-2xl border border-white/80 bg-white/90 shadow-soft backdrop-blur;
+    @apply rounded-2xl border border-brand-800 bg-brand-900/60 shadow-soft backdrop-blur;
   }
 
   .section-kicker {
-    @apply mb-4 inline-flex items-center rounded-full border border-brand-200 bg-brand-100/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-brand-700;
+    @apply mb-4 inline-flex items-center rounded-full border border-electric-500/30 bg-electric-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-electric-300;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-action-500 to-action-600 px-5 py-3 text-sm font-semibold text-white shadow-cta transition hover:from-action-600 hover:to-action-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action-300 focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 px-5 py-3 text-sm font-semibold text-white shadow-cta transition hover:from-accent-400 hover:to-accent-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-xl border border-brand-300 bg-white px-5 py-3 text-sm font-semibold text-brand-900 transition hover:border-brand-500 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center rounded-xl border border-brand-600 bg-brand-800/50 px-5 py-3 text-sm font-semibold text-brand-100 transition hover:border-electric-400 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-950;
   }
 
   .pill-urgent {
-    @apply inline-flex items-center rounded-full border border-action-200 bg-action-50 px-3 py-1 text-xs font-semibold text-action-700;
+    @apply inline-flex items-center rounded-full border border-accent-500/30 bg-accent-500/10 px-3 py-1 text-xs font-semibold text-accent-300;
   }
 
   .pill-trust {
-    @apply inline-flex items-center rounded-full border border-growth-200 bg-growth-100/70 px-3 py-1 text-xs font-semibold text-growth-700;
+    @apply inline-flex items-center rounded-full border border-success-200/30 bg-success-100/10 px-3 py-1 text-xs font-semibold text-success-200;
+  }
+
+  .glass-card {
+    @apply rounded-[1.75rem] border border-brand-700/50 bg-brand-900/40 shadow-soft backdrop-blur-md transition hover:border-electric-400/40 hover:shadow-elevated;
+  }
+
+  .glass-card-hover {
+    @apply hover:-translate-y-1 hover:border-electric-400/50 hover:shadow-glow;
   }
 }
 
 @layer utilities {
   .grid-faint {
     background-image:
-      linear-gradient(to right, rgba(61, 75, 90, 0.07) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(61, 75, 90, 0.07) 1px, transparent 1px);
+      linear-gradient(to right, rgba(155, 184, 209, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(155, 184, 209, 0.06) 1px, transparent 1px);
     background-size: 28px 28px;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-electric-300 via-electric-400 to-accent-400 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-accent {
+    @apply bg-gradient-to-r from-accent-400 to-accent-500 bg-clip-text text-transparent;
   }
 }

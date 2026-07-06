@@ -34,7 +34,7 @@ function Backdrop({ onClose, children }: { onClose: () => void; children: React.
       <div
         role="dialog"
         aria-modal="true"
-        className="relative z-10 w-full max-w-lg overflow-hidden rounded-[2rem] bg-white shadow-elevated"
+        className="relative z-10 w-full max-w-lg overflow-hidden rounded-[2rem] bg-brand-950 shadow-elevated border border-brand-800"
         onClick={(event) => event.stopPropagation()}
       >
         {children}
@@ -64,7 +64,7 @@ function StepText({
 }) {
   return (
     <div>
-      <p className="font-heading text-2xl leading-snug text-brand-950">{question}</p>
+      <p className="font-heading text-2xl leading-snug text-white">{question}</p>
       <input
         autoFocus
         name={fieldName}
@@ -79,7 +79,7 @@ function StepText({
             onEnter()
           }
         }}
-        className="mt-6 w-full border-0 border-b-2 border-brand-200 bg-transparent pb-2 text-xl text-brand-950 outline-none transition placeholder:text-graphite-400 focus:border-action-500"
+        className="mt-6 w-full border-0 border-b-2 border-brand-700 bg-transparent pb-2 text-xl text-white outline-none transition placeholder:text-brand-500 focus:border-accent-500"
       />
     </div>
   )
@@ -98,7 +98,7 @@ function StepCards({
 }) {
   return (
     <div>
-      <p className="font-heading text-2xl leading-snug text-brand-950">{question}</p>
+      <p className="font-heading text-2xl leading-snug text-white">{question}</p>
       <div className="mt-5 grid gap-2">
         {options.map((option) => (
           <button
@@ -107,8 +107,8 @@ function StepCards({
             onClick={() => onSelect(option.value)}
             className={`w-full rounded-[1.2rem] border-2 px-4 py-3 text-left text-sm font-semibold transition ${
               selected === option.value
-                ? 'border-action-500 bg-action-50 text-action-700'
-                : 'border-brand-100 bg-brand-50 text-brand-800 hover:border-brand-300'
+                ? 'border-accent-500 bg-accent-500/10 text-accent-300'
+                : 'border-brand-700 bg-brand-900/50 text-brand-200 hover:border-electric-400'
             }`}
           >
             {option.label}
@@ -222,10 +222,10 @@ export function DiagramFormModal({ open, onClose }: { open: boolean; onClose: ()
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h3 className="mt-5 font-heading text-2xl text-brand-950">
+          <h3 className="mt-5 font-heading text-2xl text-white">
             {status === 'sent' ? '¡Solicitud recibida!' : 'Formulario en modo demo'}
           </h3>
-          <p className="mt-3 text-sm leading-relaxed text-graphite-700">
+          <p className="mt-3 text-sm leading-relaxed text-brand-300">
             {status === 'sent'
               ? 'Te contactaremos en las próximas horas para revisar tu caso.'
               : 'El endpoint de captación no está disponible todavía. Revisa la conexión del formulario.'}
@@ -313,15 +313,15 @@ export function DiagramFormModal({ open, onClose }: { open: boolean; onClose: ()
       <div className="px-6 py-6 sm:px-8">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-700">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-electric-300">
               Paso {step + 1} de {TOTAL}
             </p>
-            <p className="mt-1 text-sm text-graphite-600">Déjanos tus datos y te contactamos.</p>
+            <p className="mt-1 text-sm text-brand-400">Déjanos tus datos y te contactamos.</p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full border border-brand-100 p-2 text-graphite-500 transition hover:border-brand-300 hover:text-brand-950"
+            className="rounded-full border border-brand-700 p-2 text-brand-400 transition hover:border-electric-400 hover:text-white"
             aria-label="Cerrar"
           >
             <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -334,13 +334,13 @@ export function DiagramFormModal({ open, onClose }: { open: boolean; onClose: ()
           </button>
         </div>
 
-        <div className="mt-4 h-2 overflow-hidden rounded-full bg-brand-100">
+        <div className="mt-4 h-2 overflow-hidden rounded-full bg-brand-800">
           <div className="h-full rounded-full bg-action-500 transition-all duration-300" style={{ width: `${progress}%` }} />
         </div>
 
         <div className="mt-8 min-h-[15rem]">{renderStep()}</div>
 
-        {error ? <p className="mt-4 text-sm text-red-700">{error}</p> : null}
+        {error ? <p className="mt-4 text-sm text-accent-400">{error}</p> : null}
 
         <div className="mt-8 flex items-center justify-between gap-3">
           <button
