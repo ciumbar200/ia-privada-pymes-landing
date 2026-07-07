@@ -15,7 +15,6 @@ import {
   type PageData,
 } from './data/content'
 import { trackEvent } from './lib/analytics'
-import { VolumetricStudio } from './components/VolumetricStudio'
 
 function normalizePath(pathname: string) {
   if (!pathname || pathname === '/') return '/'
@@ -34,7 +33,6 @@ function upsertLink(rel: string, href: string) {
   element.setAttribute('href', href)
 }
 
-// Trust stats moved into VolumetricStudio hero context
 
 function CheckIcon({ className = '' }: { className?: string }) {
   return (
@@ -77,23 +75,23 @@ function Header({ currentPage }: { currentPage: PageData }) {
   }, [])
   function resolveNavHref(href: string) { return href.startsWith('/#') ? (currentPage.path === '/' ? href.slice(1) : href) : href }
   return (
-    <header className={`fixed inset-x-0 top-0 z-[100] border-b transition-all ${scrolled ? 'border-brand-200 bg-white/95 shadow-soft backdrop-blur' : 'border-transparent bg-transparent'}`}>
+    <header className={`fixed inset-x-0 top-0 z-[100] border-b transition-all ${scrolled ? 'border-brand-200 bg-white/95 shadow-soft backdrop-blur' : 'border-brand-100 bg-white/80 backdrop-blur'}`}>
       <div className="section-shell flex h-16 items-center justify-between gap-4">
-        <a href="/" className={`inline-flex min-w-0 items-center gap-2 font-heading text-base font-semibold tracking-tight ${scrolled ? 'text-brand-900' : 'text-white'}`} aria-label={`${brandName} - Inicio`}>
-          <span className={`flex h-8 w-8 items-center justify-center rounded-lg ${scrolled ? 'bg-accent-600' : 'bg-white/20 backdrop-blur'} text-sm font-bold text-white`}>N</span>
+        <a href="/" className="inline-flex min-w-0 items-center gap-2 font-heading text-base font-semibold tracking-tight text-brand-900" aria-label={`${brandName} - Inicio`}>
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent-600 text-sm font-bold text-white">N</span>
           <span>{brandName}</span>
         </a>
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Navegación principal">
           {primaryNav.map((item) => (
             <a key={item.href} href={resolveNavHref(item.href)} aria-current={currentPage.path === item.href ? 'page' : undefined}
-              className={`rounded-lg px-3.5 py-2 text-sm font-medium transition ${currentPage.path === item.href ? 'bg-accent-50 text-accent-700' : scrolled ? 'text-brand-600 hover:bg-brand-50 hover:text-brand-900' : 'text-white/80 hover:bg-white/10 hover:text-white'}`}>{item.label}</a>
+              className={`rounded-lg px-3.5 py-2 text-sm font-medium transition ${currentPage.path === item.href ? 'bg-accent-50 text-accent-700' : 'text-brand-600 hover:bg-brand-50 hover:text-brand-900'}`}>{item.label}</a>
           ))}
         </nav>
-        <div className={`hidden items-center gap-3 lg:flex`}><a href="/contacto" className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white transition ${scrolled ? 'bg-accent-600 hover:bg-accent-500 shadow-cta' : 'bg-white/15 backdrop-blur hover:bg-white/25 border border-white/20'}`} onClick={() => trackEvent('cta_click', { location: 'nav' })}>Solicitar auditoría</a>
+        <div className="hidden items-center gap-3 lg:flex"><a href="/contacto" className="inline-flex items-center justify-center rounded-xl bg-accent-600 px-5 py-3 text-sm font-semibold text-white shadow-cta transition hover:bg-accent-500" onClick={() => trackEvent('cta_click', { location: 'nav' })}>Solicitar auditoría</a>
         </div>
         <div className="flex items-center gap-2 lg:hidden">
-          <a href="/contacto" className={`inline-flex items-center rounded-lg ${scrolled ? 'bg-accent-600' : 'bg-white/15 backdrop-blur'} px-3 py-2 text-xs font-semibold text-white shadow-cta`} onClick={() => trackEvent('cta_click', { location: 'mobile_top' })}>Auditoría</a>
-          <button type="button" className={`inline-flex items-center rounded-lg border ${scrolled ? 'border-brand-300 bg-white text-brand-700' : 'border-white/20 bg-white/5 text-white/90 backdrop-blur'} px-3 py-2 text-sm font-semibold`} onClick={() => setOpen((s) => !s)} aria-expanded={open} aria-controls="mobile-nav" aria-label="Abrir menú">Menú</button>
+          <a href="/contacto" className="inline-flex items-center rounded-lg bg-accent-600 px-3 py-2 text-xs font-semibold text-white shadow-cta" onClick={() => trackEvent('cta_click', { location: 'mobile_top' })}>Auditoría</a>
+          <button type="button" className="inline-flex items-center rounded-lg border border-brand-300 bg-white text-brand-700 px-3 py-2 text-sm font-semibold" onClick={() => setOpen((s) => !s)} aria-expanded={open} aria-controls="mobile-nav" aria-label="Abrir menú">Menú</button>
         </div>
       </div>
       {open ? (
@@ -144,40 +142,34 @@ function MobileStickyCta() {
 
 function Hero({ page }: { page: PageData }) {
   return (
-    <header id="hero" className="relative h-screen min-h-[680px] w-full overflow-hidden bg-black">
-      <VolumetricStudio className="absolute inset-0 h-full w-full" />
-      <div className="relative z-40 flex h-full items-center">
-        <div className="section-shell w-full">
-          <div className="max-w-3xl animate-fade-up">
-            <span className="mb-4 inline-flex items-center rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-white/80 backdrop-blur">
-              {page.hero.eyebrow}
-            </span>
-            <h1 className="max-w-4xl text-4xl font-semibold leading-[1.1] text-white md:text-5xl lg:text-[3.5rem]">
-              {page.h1}
-            </h1>
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/70 md:text-lg">
-              {page.hero.intro}
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a href={page.hero.primaryCtaHref} className="inline-flex items-center justify-center rounded-xl bg-accent-600 px-6 py-3.5 text-sm font-semibold text-white shadow-cta transition hover:bg-accent-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black" onClick={() => trackEvent('cta_click', { location: 'hero', type: 'primary', page: page.path })}>
-                {page.hero.primaryCtaLabel}
-                <ArrowIcon className="ml-2 h-4 w-4" />
-              </a>
-              <a href={page.hero.secondaryCtaHref} className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white/90 backdrop-blur transition hover:border-white/40 hover:bg-white/10" onClick={() => trackEvent('cta_click', { location: 'hero', type: 'secondary', page: page.path })}>{page.hero.secondaryCtaLabel}</a>
-            </div>
-            <ul className="mt-10 grid gap-3 sm:grid-cols-3">
-              {page.hero.bullets.map((item) => (
-                <li key={item} className="flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm font-medium text-white/80 backdrop-blur">
-                  <CheckIcon className="h-5 w-5 flex-shrink-0 text-accent-400" />
-                  {item}
-                </li>
-              ))}
-            </ul>
+    <section id="hero" className="relative overflow-hidden bg-white bg-mesh pt-28 pb-20 lg:pt-36 lg:pb-28">
+      <div className="section-shell">
+        <div className="max-w-3xl">
+          <span className="section-kicker">{page.hero.eyebrow}</span>
+          <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-[1.1] text-brand-900 md:text-5xl lg:text-[3.5rem]">
+            {page.h1}
+          </h1>
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-brand-600 md:text-lg">
+            {page.hero.intro}
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a href={page.hero.primaryCtaHref} className="btn-primary" onClick={() => trackEvent('cta_click', { location: 'hero', type: 'primary', page: page.path })}>
+              {page.hero.primaryCtaLabel}
+              <ArrowIcon className="ml-2 h-4 w-4" />
+            </a>
+            <a href={page.hero.secondaryCtaHref} className="btn-secondary" onClick={() => trackEvent('cta_click', { location: 'hero', type: 'secondary', page: page.path })}>{page.hero.secondaryCtaLabel}</a>
           </div>
+          <ul className="mt-10 grid gap-3 sm:grid-cols-3">
+            {page.hero.bullets.map((item) => (
+              <li key={item} className="flex items-center gap-2.5 rounded-xl border border-brand-200 bg-brand-50 px-4 py-3.5 text-sm font-medium text-brand-700">
+                <CheckIcon className="h-5 w-5 flex-shrink-0 text-accent-600" />
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 z-30 h-32 bg-gradient-to-b from-transparent to-white" aria-hidden="true" />
-    </header>
+    </section>
   )
 }
 
